@@ -1,0 +1,19 @@
+# ambiente
+.env
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+.DS_Store
+
+# estado gerado em runtime (mantenha os seeds versionados manualmente se preferir)
+state/*.json
+!state/history.json
+!state/scheduled.json
+
+# saida local de dry-run (PNGs e JSON gerados)
+output/
+
+# logs
+*.log

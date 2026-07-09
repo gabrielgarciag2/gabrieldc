@@ -1,0 +1,30 @@
+# ============================================================================
+# Blocklist do validador de guarda (src/validator.py)
+# Uma entrada por linha. Comparacao case-insensitive, substring simples.
+# Linhas iniciadas com "#" sao comentarios e ignoradas.
+#
+# Fontes desta lista (extraidas da Especificacao_Pipeline_Agente.md, §4.2,
+# e dos arquivos de referencia deste ciclo - Legendas_Instagram_30_Dias):
+#   - nomes de clientes reais citados na especificacao como exemplo
+#     ("Casa Ativa, Gasparin, nomes de contatos etc.")
+#   - concorrentes/pessoas citados explicitamente na especificacao
+#     ("Marçal", "G4")
+#   - IMPORTANTE: mantenha esta lista viva. Sempre que um cliente novo,
+#     contato ou concorrente for mencionado em qualquer conversa/reuniao,
+#     adicione o nome aqui antes do proximo ciclo semanal.
+# ============================================================================
+
+# Clientes reais (nunca podem aparecer nominalmente em conteudo publico)
+Casa Ativa
+Gasparin
+
+# Concorrentes / pessoas de terceiros (mencao nominal proibida)
+Marçal
+Marcal
+G4
+G4 Educacao
+G4 Educação
+
+# Nomes de contatos / colaboradores internos que nao devem ser citados
+# nominalmente em posts publicos (ajuste conforme a equipe real)
+Karen

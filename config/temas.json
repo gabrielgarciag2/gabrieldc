@@ -1,0 +1,79 @@
+{
+  "_nota": "Banco de temas/angulos pre-aprovados por Gabriel Garcia no setup (Playbook v2, §5.4: 'o agente sorteia temas de uma lista de 60+ angulos que voce aprova UMA vez no setup; ele varia execucao, nao territorio'). Extraido dos angulos ja publicados/planejados em Legendas_Instagram_30_Dias_1.md - NENHUM texto de cliente foi copiado, apenas o angulo/tese generico.",
+  "linhas": {
+    "Mentoria com o Especialista": [
+      "Vazamento de margem escondido em devolução por erro interno",
+      "Custo real de frete calculado rota a rota, não por média geral",
+      "Mapeamento de processos revela mais áreas do que o organograma oficial mostra",
+      "Antes de expandir para outro estado, fazer a conta da operação primeiro",
+      "Diagnóstico de gargalo de decisão concentrado inteiramente no dono",
+      "Custo oculto de estoque parado que não aparece direto no DRE",
+      "Retrabalho entre áreas como sintoma de processo sem dono definido",
+      "Concentração de compras em fornecedor único: risco versus poder de barganha",
+      "O indicador que ninguém na empresa está olhando",
+      "Sazonalidade mal gerida gera decisão de caixa equivocada",
+      "Terceirização mal desenhada aumenta custo escondido de operação",
+      "Diagnóstico revela que crescimento recente mascarou queda de eficiência",
+      "Auditoria do processo comercial identifica perda silenciosa de receita",
+      "Custo de oportunidade de decisão adiada por falta de dado"
+    ],
+    "Framework Próprio": [
+      "Regra 70/30: tempo do dono em estratégico versus operacional",
+      "Regra da Cadeira: responsabilidade é do cargo, não da pessoa",
+      "Classificação de carteira de clientes em níveis N1 a N5",
+      "Cadência de follow-up comercial D+1 / D+3 / D+7 / D+14",
+      "Framework de delegação estruturada com padrão de entrega escrito",
+      "Ritual mensal de previsto versus realizado sem maquiagem",
+      "Matriz de decisão para avaliar expansão geográfica",
+      "Estrutura de meta funcional: indicador, dono e ritual",
+      "Framework de precificação por nível de serviço entregue",
+      "Rotina de gestão desenhada para rodar sem a presença do dono",
+      "Framework de priorização de investimento por ROI e urgência",
+      "Método de mapeamento de processo em três camadas de profundidade",
+      "Framework de sucessão gradual de liderança operacional",
+      "Checklist de saúde financeira em cinco perguntas simples"
+    ],
+    "Dilema de Sócio": [
+      "Fornecedor concentrado: cortar relação ou renegociar termos",
+      "Triplicar de tamanho em poucos anos: ambição ou irresponsabilidade",
+      "Sócio fundador que não consegue sair da operação do dia a dia",
+      "Distribuir lucro agora ou reinvestir para crescer mais rápido",
+      "Contratar parente de confiança ou profissional de mercado",
+      "Vender parte da empresa para financiar o próximo salto",
+      "Sócio que trabalha visivelmente mais que o outro: como reequilibrar",
+      "Expandir com capital próprio ou recorrer a dívida",
+      "Quando o sócio minoritário decide que quer sair da sociedade",
+      "Empresa familiar: separar a mesa de jantar da mesa de reunião",
+      "Manter margem ou ganhar mercado com preço mais agressivo",
+      "Centralizar decisão no fundador ou descentralizar para crescer"
+    ],
+    "Liderança (Dale Carnegie)": [
+      "Como dar feedback ao funcionário mais antigo da casa",
+      "Roteiro de reunião 1:1 estruturado em 30 minutos",
+      "Como apresentar uma estratégia nova sem perder o time pelo caminho",
+      "O erro nº 1 ao comunicar plano: número antes de sentido",
+      "Delegar tarefa sem abrir mão do padrão de qualidade",
+      "Como entregar feedback negativo sem quebrar a relação de confiança",
+      "Liderar alguém que até pouco tempo era seu par de equipe",
+      "Construir confiança com um time novo nos primeiros 90 dias",
+      "Reconhecer o trabalho da equipe sem soar protocolar ou vazio",
+      "Conduzir reunião de resultado sem virar caça às bruxas",
+      "Preparar o segundo nível de liderança para decidir sozinho",
+      "Comunicação assertiva em momentos de crise interna na equipe"
+    ],
+    "Tese Regional": [
+      "Cinco sinais de que a empresa do interior está pronta para profissionalizar a gestão",
+      "O interior do Rio Grande do Sul como potência empresarial pouco vista",
+      "Por que contratar consultor de fora quando o de perto conhece o mercado local",
+      "WhatsApp como sistema de gestão informal: o risco escondido nisso",
+      "Empresas familiares do Vale do Taquari com a segunda geração assumindo",
+      "Escassez de mão de obra qualificada no interior como desafio estrutural",
+      "Sucessão empresarial nas cidades médias do Vale do Taquari",
+      "A cultura do 'sempre foi assim' como freio da profissionalização",
+      "A vantagem competitiva de estar fisicamente perto do cliente e do fornecedor",
+      "Transparência de resultados como construção de autoridade local",
+      "Diferenças reais entre gerir empresa de capital e empresa do interior",
+      "Consultoria de gestão aplicada à realidade concreta das PMEs gaúchas"
+    ]
+  }
+}
