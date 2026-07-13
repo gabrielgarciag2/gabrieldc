@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato linkedin/texto do contrato para teste de dry-run.",
+    "linha": "Framework Próprio",
+    "data": "2026-07-21",
+    "canal": "linkedin",
+    "metrica_principal": null
+  },
+  {
+    "tema": "O vazamento de margem que ninguém está olhando",
+    "linha": "Mentoria com o Especialista",
+    "data": "2026-07-20",
+    "canal": "instagram",
+    "metrica_principal": null
+  },
+  {
+    "tema": "O interior do RS é uma potência empresarial invisível.",
+    "linha": "Tese Regional",
+    "data": "2026-07-21",
+    "canal": "instagram",
+    "metrica_principal": null
+  }
+]
