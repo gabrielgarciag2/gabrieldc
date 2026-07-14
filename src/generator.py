@@ -23,17 +23,20 @@ import logging
 import os
 import time
 from datetime import datetime, timedelta
+from pathlib import Path
 
 logger = logging.getLogger("agente.generator")
 
 DEFAULT_MODEL = "claude-sonnet-4-6"
+BASE_DIR = Path(__file__).resolve().parent.parent
+PECA_FIXA_PATH = BASE_DIR / "config" / "peca_fixa_lancamento.json"
 
 # ============================================================================
 # PROMPT DO AGENTE — copiado literalmente da secao 3 do
 # Agente_de_Conteudo_Playbook.md (Playbook v2). NAO EDITAR sem atualizar o
 # Playbook em paralelo — este texto e a "constituicao editorial" do agente.
 # ============================================================================
-SYSTEM_PROMPT = """Você é o Agente de Conteúdo de Gabriel Garcia (@gabrielgarciadc), consultor de gestão e CEO da Dale Carnegie Vale do Taquari (Lajeado/RS). Você opera de forma totalmente autônoma: nenhum humano revisará sua saída antes da publicação. Por isso, siga as regras abaixo como leis absolutas.
+SYSTEM_PROMPT = """Você é o Agente de Conteúdo de Gabriel Garcia (@gabrielgarciadc), Diretor da Dale Carnegie Vale do Taquari e Master Trainer certificado (Lajeado/RS). Você opera de forma totalmente autônoma: nenhum humano revisará sua saída antes da publicação. Por isso, siga as regras abaixo como leis absolutas.
 
 MISSÃO: construir, via LinkedIn e Instagram, a posição de referência em gestão empresarial para PMEs do interior do RS (Vale do Taquari), gerando autoridade e conversas comerciais qualificadas via DIRECT.
 
@@ -274,6 +277,54 @@ def _mock_batch(user_payload: dict) -> dict:
     }
 
 
+def _aplicar_peca_fixa(lote: dict, user_payload: dict) -> dict:
+    """Injeta peca(s) fixas pre-escritas (config/peca_fixa_lancamento.json)
+    no lote gerado, substituindo a peca do LLM/mock que ocupa o mesmo slot
+    de datas_alvo_semana (mantendo a cadencia de exatamente 8 pecas). O
+    arquivo e consumido uma unica vez: apos aplicar, e renomeado com sufixo
+    '_usada' para nao repetir em semanas seguintes. Se o arquivo nao
+    existir (ja consumido ou nunca criado), o lote volta inalterado."""
+    if not PECA_FIXA_PATH.exists():
+        return lote
+
+    try:
+        dados = json.loads(PECA_FIXA_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        logger.exception("Falha ao ler %s — peca fixa ignorada nesta rodada.", PECA_FIXA_PATH)
+        return lote
+
+    datas = user_payload.get("datas_alvo_semana", {})
+    pecas_fixas = dados.get("pecas", [])
+    if not pecas_fixas:
+        return lote
+
+    for peca_fixa in pecas_fixas:
+        peca_fixa = dict(peca_fixa)  # nao mutar o dict original
+        slot = peca_fixa.pop("slot", None)
+        publicar_em = datas.get(slot)
+        if not publicar_em:
+            logger.warning("Peca fixa com slot desconhecido/ausente (%s) — pulando.", slot)
+            continue
+        peca_fixa["publicar_em"] = publicar_em
+        # Remove qualquer peca do lote (LLM/mock) que caia no mesmo slot,
+        # para evitar duplicar horario e manter o total de 8 pecas/semana.
+        lote["pecas"] = [p for p in lote.get("pecas", []) if p.get("publicar_em") != publicar_em]
+        lote["pecas"].append(peca_fixa)
+        logger.info("Peca fixa '%s' injetada no slot '%s' (%s).", peca_fixa.get("id"), slot, publicar_em)
+
+    try:
+        usada_path = PECA_FIXA_PATH.with_name(PECA_FIXA_PATH.stem + "_usada.json")
+        PECA_FIXA_PATH.rename(usada_path)
+        logger.info("Peca fixa consumida — arquivada em %s (nao sera reaplicada).", usada_path)
+    except Exception:
+        logger.exception(
+            "Falha ao arquivar %s apos uso — risco de reaplicar na proxima semana; "
+            "verificar/renomear manualmente.", PECA_FIXA_PATH,
+        )
+
+    return lote
+
+
 def generate_batch(metrics: dict, temas_recentes: list, hoje: datetime = None) -> dict:
     """Gera o lote semanal via API do Claude (ou modo mock). Retorna o
     dict do contrato de saida (secao 4.1 da especificacao)."""
@@ -281,13 +332,13 @@ def generate_batch(metrics: dict, temas_recentes: list, hoje: datetime = None) -
     api_key = os.environ.get("ANTHROPIC_API_KEY")
 
     if not api_key:
-        return _mock_batch(user_payload)
+        return _aplicar_peca_fixa(_mock_batch(user_payload), user_payload)
 
     try:
         import anthropic
     except ImportError:
         logger.error("SDK 'anthropic' nao instalado. Rode: pip install anthropic. Usando modo mock.")
-        return _mock_batch(user_payload)
+        return _aplicar_peca_fixa(_mock_batch(user_payload), user_payload)
 
     model = os.environ.get("CLAUDE_MODEL", DEFAULT_MODEL)
     client = anthropic.Anthropic(api_key=api_key)
@@ -317,7 +368,7 @@ def generate_batch(metrics: dict, temas_recentes: list, hoje: datetime = None) -
             )
             cleaned = _strip_code_fences(raw_text)
             lote = json.loads(cleaned)
-            return lote
+            return _aplicar_peca_fixa(lote, user_payload)
         except json.JSONDecodeError as exc:
             last_exc = exc
             logger.error("Resposta do Claude nao e JSON valido (tentativa %d/%d): %s",
@@ -331,4 +382,4 @@ def generate_batch(metrics: dict, temas_recentes: list, hoje: datetime = None) -
 
     logger.error("Todas as tentativas de geracao via Claude API falharam (%s). "
                  "Caindo para modo mock para nao interromper o pipeline.", last_exc)
-    return _mock_batch(user_payload)
+    return _aplicar_peca_fixa(_mock_batch(user_payload), user_payload)

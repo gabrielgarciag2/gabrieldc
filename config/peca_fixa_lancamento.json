@@ -1,0 +1,60 @@
+{
+  "_nota": "Peca fixa injetada uma unica vez no proximo lote semanal automatizado (consumida e arquivada apos uso — ver src/generator.py:_aplicar_peca_fixa). Anuncia o novo posicionamento (Diretor DC VTQ / Master Trainer).",
+  "pecas": [
+    {
+      "slot": "linkedin_ter_08h",
+      "id": "li-lancamento-posicionamento",
+      "canal": "linkedin",
+      "formato": "texto",
+      "linha": "Liderança (Dale Carnegie)",
+      "racional": "Post de lancamento do novo posicionamento (Diretor DC VTQ / Master Trainer), pedindo apoio da audiencia para divulgar.",
+      "texto": "Passei os últimos anos sendo apresentado como \"consultor de gestão\". Não era mentira, mas também não era a foto inteira — e resolvi ajustar isso.\n\nHoje sou Diretor da Dale Carnegie Vale do Taquari e Master Trainer certificado. Não é só nome novo no cargo: é a forma mais honesta de descrever onde eu realmente entrego resultado — dentro de conselhos e mesas de sócio de empresas do interior do RS, ajudando quem lidera a decidir melhor, comunicar melhor e formar um time capaz de sustentar o crescimento sem depender só do dono.\n\nO padrão que mais vejo por aqui não é falta de vontade de crescer. É falta de método para desenvolver as pessoas que vão segurar esse crescimento — e isso não se resolve com mais uma palestra motivacional.\n\nPor isso a partir de agora, toda semana, vou trazer pra cá o que sai dessas conversas: os frameworks que uso, os dilemas mais comuns de sócio e os padrões de liderança que realmente funcionam em empresa pequena e média — sem fórmula mágica, sem jargão de coach, sempre com casos anonimizados.\n\nO objetivo é simples: virar referência em desenvolvimento de liderança para quem toca empresa aqui no Vale do Taquari.\n\nSe você lidera gente — ou conhece alguém que lidera — me ajuda a começar essa fase: comenta, compartilha ou marca quem devia estar acompanhando.\n\n#lideranca #gestao #dalecarnegie #valedotaquari"
+    },
+    {
+      "slot": "carrossel_seg_11h30",
+      "id": "ig-lancamento-posicionamento",
+      "canal": "instagram",
+      "formato": "carrossel",
+      "linha": "Liderança (Dale Carnegie)",
+      "racional": "Versao em carrossel do post de lancamento do novo posicionamento, espelhando o conteudo do LinkedIn.",
+      "slides": [
+        {
+          "tipo": "capa",
+          "kicker": "LIDERANÇA (DALE CARNEGIE)",
+          "titulo": "Consultor de gestão nunca foi a foto inteira",
+          "subtitulo": null
+        },
+        {
+          "tipo": "conteudo",
+          "numero": "1",
+          "titulo": "Quem eu sou hoje",
+          "corpo": "Sou Diretor da Dale Carnegie Vale do Taquari e Master Trainer certificado. Atuo dentro de conselhos e mesas de sócio de empresas do interior do RS."
+        },
+        {
+          "tipo": "conteudo",
+          "numero": "2",
+          "titulo": "O problema que mais vejo",
+          "corpo": "Não é falta de vontade de crescer. É falta de método para desenvolver quem vai segurar esse crescimento — e isso não se resolve com palestra motivacional."
+        },
+        {
+          "tipo": "conteudo",
+          "numero": "3",
+          "titulo": "O que isso muda pra você",
+          "corpo": "Time capaz de decidir e comunicar melhor, e sustentar o crescimento sem depender só do dono pra tudo funcionar."
+        },
+        {
+          "tipo": "conteudo",
+          "numero": "4",
+          "titulo": "O que vem por aí",
+          "corpo": "Toda semana, os frameworks, dilemas de sócio e padrões de liderança que funcionam em empresa pequena e média — com casos anonimizados."
+        },
+        {
+          "tipo": "cta",
+          "titulo": "Me ajuda a começar essa fase",
+          "corpo": "Comenta, compartilha ou marca quem lidera gente e devia estar acompanhando."
+        }
+      ],
+      "legenda": "Passei anos sendo apresentado como \"consultor de gestão\". Não era mentira, mas não era a foto inteira — e resolvi ajustar isso.\n\nHoje sou Diretor da Dale Carnegie Vale do Taquari e Master Trainer certificado. Desliza pra entender o que muda na prática — e o que vem por aí toda semana aqui.\n\n👉 Comenta, compartilha ou marca quem lidera gente.\n\n#lideranca #gestao #dalecarnegie #valedotaquari #lajeado"
+    }
+  ]
+}

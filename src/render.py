@@ -2,9 +2,9 @@
 """
 src/render.py — "Fabrica de Arte".
 
-Portado de gerar_carrosseis.py (fornecido como insumo), mantendo o mesmo
-sistema visual (Navy/Gold/off-white, 1080x1350, footer @gabrielgarciadc,
-dots de paginacao, capa/conteudo/CTA com botao dourado).
+Sistema visual unificado (branco/preto/azul, com azul petróleo como
+destaque pontual), 1080x1350, footer @gabrielgarciadc, dots de
+paginacao, capa/conteudo/CTA com botao azul.
 
 Funcao publica:
     render(peca_json: dict, output_dir: Path | None = None) -> list[Path]
@@ -29,26 +29,31 @@ from PIL import Image, ImageDraw, ImageFont
 logger = logging.getLogger("agente.render")
 
 W, H = 1080, 1350
-NAVY = (31, 56, 100)
-NAVY_DARK = (22, 40, 72)
-GOLD = (191, 144, 0)
-GOLD_LIGHT = (255, 242, 204)
-WHITE = (255, 255, 255)
-OFFWHITE = (247, 247, 245)
-GRAY = (90, 96, 108)
 
-# Paleta do card branco (retrato + gancho/virada).
-CARD_BLACK = (17, 17, 20)
-CARD_BLUE = (10, 102, 194)
-CARD_GRAY = (110, 116, 128)
-CARD_GRAY_DARK = (70, 76, 88)
+# Paleta editorial unica (branco / preto / azul), com azul petroleo
+# reservado para destaques pontuais. Usada em todos os formatos —
+# carrossel e card — para manter identidade visual consistente.
+WHITE = (255, 255, 255)
+WHITE_SOFT = (223, 228, 234)   # branco suave p/ texto secundario em fundo escuro
+BLACK = (17, 17, 20)
+BLACK_SOFT = (60, 64, 72)      # preto suave p/ texto secundario em fundo claro
+BLUE = (10, 102, 194)          # azul primario — kickers, botoes, links, dots ativos
+BLUE_TINT = (198, 214, 230)    # tom claro do azul — elementos secundarios em fundo claro
+PETROL = (11, 61, 74)          # azul petroleo — destaque pontual (capa)
+PETROL_TINT = (70, 100, 112)   # tom do petroleo — elementos secundarios em fundo escuro
+
+# Paleta do card branco (retrato + gancho/virada) — mesma paleta unificada.
+CARD_BLACK = BLACK
+CARD_BLUE = BLUE
+CARD_GRAY = BLACK_SOFT
+CARD_GRAY_DARK = BLACK_SOFT
 CARD_DIVIDER = (225, 227, 230)
-CARD_ICON = (60, 64, 72)
+CARD_ICON = BLACK_SOFT
 
 PHOTO_PATH = Path(__file__).resolve().parent.parent / "assets" / "gabriel-garcia.jpg"
 CARD_NAME = "Gabriel Garcia"
-CARD_ROLE_LINE1 = "CEO Dale Carnegie Vale do Taquari"
-CARD_ROLE_LINE2 = "Consultor de Gestão | Lajeado/RS"
+CARD_ROLE_LINE1 = "Diretor Dale Carnegie Vale do Taquari"
+CARD_ROLE_LINE2 = "Master Trainer | Trainer Certificado"
 
 # Caminhos padrao das fontes DejaVu (presentes por default na maioria das
 # distros Linux usadas pelo runner do GitHub Actions / ubuntu-latest).
@@ -161,23 +166,23 @@ def draw_text_block(draw, text, f, x, y, maxw, fill, lh=1.28):
 
 
 def footer(draw, idx, total, dark_bg):
-    col = WHITE if dark_bg else NAVY
+    col = WHITE if dark_bg else BLACK
     draw.text((80, H - 100), "@gabrielgarciadc", font=font(True, 30), fill=col)
     dot_x = W - 80 - (total * 26)
     for i in range(total):
         cx = dot_x + i * 26
         cy = H - 86
         r = 7 if i == idx else 5
-        color = GOLD if i == idx else ((120, 135, 165) if dark_bg else (200, 205, 215))
+        color = BLUE if i == idx else (PETROL_TINT if dark_bg else BLUE_TINT)
         draw.ellipse([cx - r, cy - r, cx + r, cy + r], fill=color)
 
 
 def slide_cover(kicker: str, title: str, sub: Optional[str] = None) -> Image.Image:
-    img = Image.new("RGB", (W, H), NAVY)
+    img = Image.new("RGB", (W, H), PETROL)
     d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, W, 14], fill=GOLD)
-    d.rectangle([80, 170, 150, 178], fill=GOLD)
-    d.text((80, 200), kicker.upper(), font=font(True, 32), fill=GOLD)
+    d.rectangle([0, 0, W, 14], fill=BLUE)
+    d.rectangle([80, 170, 150, 178], fill=BLUE)
+    d.text((80, 200), kicker.upper(), font=font(True, 32), fill=BLUE)
 
     maxw = W - 160
     # Area disponivel para titulo (+subtitulo opcional) antes do "arraste"
@@ -191,27 +196,27 @@ def slide_cover(kicker: str, title: str, sub: Optional[str] = None) -> Image.Ima
         f_sub, sub_final, _ = fit_font_and_wrap(
             d, sub, False, 42, maxw, max(sub_max_h, MIN_FONT_SIZE), 1.3, label="capa.subtitulo"
         )
-        draw_text_block(d, sub_final, f_sub, 80, y + 50, maxw, (200, 210, 228), 1.3)
-    d.text((80, H - 190), "arraste  →", font=font(True, 40), fill=GOLD)
+        draw_text_block(d, sub_final, f_sub, 80, y + 50, maxw, WHITE_SOFT, 1.3)
+    d.text((80, H - 190), "arraste  →", font=font(True, 40), fill=BLUE)
     return img
 
 
 def slide_content(kicker, title, body, idx, total, num=None, light=True) -> Image.Image:
-    bg = OFFWHITE if light else NAVY
+    bg = WHITE if light else BLACK
     img = Image.new("RGB", (W, H), bg)
     d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, W, 14], fill=GOLD)
-    tcol = NAVY if light else WHITE
-    bcol = GRAY if light else (205, 213, 230)
+    d.rectangle([0, 0, W, 14], fill=BLUE)
+    tcol = BLACK if light else WHITE
+    bcol = BLACK_SOFT if light else WHITE_SOFT
     maxw = W - 160
 
     if num:
-        d.text((80, 150), num, font=font(True, 150), fill=GOLD)
-        d.text((80, 330), kicker.upper(), font=font(True, 30), fill=GOLD)
+        d.text((80, 150), num, font=font(True, 150), fill=BLUE)
+        d.text((80, 330), kicker.upper(), font=font(True, 30), fill=BLUE)
         ty = 390
     else:
-        d.rectangle([80, 170, 150, 178], fill=GOLD)
-        d.text((80, 200), kicker.upper(), font=font(True, 30), fill=GOLD)
+        d.rectangle([80, 170, 150, 178], fill=BLUE)
+        d.text((80, 200), kicker.upper(), font=font(True, 30), fill=BLUE)
         ty = 270
 
     footer_top = H - 130  # respeita area do footer
@@ -237,11 +242,11 @@ def slide_content(kicker, title, body, idx, total, num=None, light=True) -> Imag
 
 
 def slide_cta(title, body, idx, total) -> Image.Image:
-    img = Image.new("RGB", (W, H), NAVY_DARK)
+    img = Image.new("RGB", (W, H), BLACK)
     d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, W, 14], fill=GOLD)
-    d.rectangle([80, 170, 150, 178], fill=GOLD)
-    d.text((80, 200), "AGORA É COM VOCÊ", font=font(True, 30), fill=GOLD)
+    d.rectangle([0, 0, W, 14], fill=BLUE)
+    d.rectangle([80, 170, 150, 178], fill=BLUE)
+    d.text((80, 200), "AGORA É COM VOCÊ", font=font(True, 30), fill=BLUE)
     maxw = W - 160
 
     footer_top = H - 130
@@ -258,11 +263,11 @@ def slide_cta(title, body, idx, total) -> Image.Image:
     f_body, body_final, _ = fit_font_and_wrap(
         d, body, False, 44, maxw, max(body_budget, MIN_FONT_SIZE), 1.34, label="cta.corpo"
     )
-    y = draw_text_block(d, body_final, f_body, 80, y + 50, maxw, (205, 213, 230), 1.34)
+    y = draw_text_block(d, body_final, f_body, 80, y + 50, maxw, WHITE_SOFT, 1.34)
 
     bx, by = 80, min(y + 70, footer_top - 110)
-    d.rounded_rectangle([bx, by, bx + 640, by + 110], radius=16, fill=GOLD)
-    d.text((bx + 40, by + 30), "Siga @gabrielgarciadc", font=font(True, 40), fill=NAVY_DARK)
+    d.rounded_rectangle([bx, by, bx + 640, by + 110], radius=16, fill=BLUE)
+    d.text((bx + 40, by + 30), "Siga @gabrielgarciadc", font=font(True, 40), fill=WHITE)
     footer(d, idx, total, True)
     return img
 
