@@ -1,1 +1,32 @@
-{}
+{
+  "ig-c1": {
+    "metricool_id": null,
+    "uuid": null,
+    "url_planner": null
+  },
+  "ig-card1": {
+    "metricool_id": null,
+    "uuid": null,
+    "url_planner": null
+  },
+  "ig-c2": {
+    "metricool_id": null,
+    "uuid": null,
+    "url_planner": null
+  },
+  "li-3": {
+    "metricool_id": null,
+    "uuid": null,
+    "url_planner": null
+  },
+  "ig-c3": {
+    "metricool_id": null,
+    "uuid": null,
+    "url_planner": null
+  },
+  "ig-card2": {
+    "metricool_id": null,
+    "uuid": null,
+    "url_planner": null
+  }
+}
