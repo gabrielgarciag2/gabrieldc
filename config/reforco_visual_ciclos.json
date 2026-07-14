@@ -1,0 +1,55 @@
+{
+  "_nota": "Conteudo reconstruido para re-renderizar com o design corrigido (paleta unificada + cabecalho novo, commit 8ef3890) as 4 pecas de Instagram que foram geradas pelo lote automatico de 2026-07-14 ANTES do fix (ig-card1, ig-c2, ig-c3, ig-card2). Texto/legenda mantidos identicos aos originais ja publicados no Metricool; apenas o visual muda.",
+  "pecas": [
+    {
+      "id": "ig-card1",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Dilema de Sócio",
+      "gancho": "Ser comprometido com o negócio é uma coisa.",
+      "virada": "Ser o único ponto de falha dele é outra.",
+      "legenda": "Existe uma diferença enorme entre ser comprometido com o negócio e ser o único ponto de falha dele.\n\nQuando o dono precisa estar presente em tudo — do operacional ao estratégico — a empresa não cresce, ela apenas sobrevive enquanto ele aguenta.\n\nIsso te soa familiar? Comenta aqui ou me manda uma mensagem.\n\n#GestãoEmpresarial #Sócios #PME #LiderançaEmpresarial #ValeDoTaquari"
+    },
+    {
+      "id": "ig-card2",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Framework Próprio",
+      "gancho": "Crescer o faturamento é fácil.",
+      "virada": "Crescer a margem exige gestão.",
+      "legenda": "Crescer o faturamento é mais fácil do que parece. Crescer a margem exige gestão.\n\nO padrão que encontro com frequência: operação que dobrou de tamanho nos últimos anos mas o dono não sente que ganhou mais. Às vezes, ganhou menos.\n\nAntes de buscar mais volume, vale perguntar: onde está indo a margem que já existe?\n\nSalva esse card se isso faz sentido pra ti. 👆\n\n#GestãoEmpresarial #Margem #PME #Finanças #ValeDoTaquari"
+    },
+    {
+      "id": "ig-c2",
+      "canal": "instagram",
+      "formato": "carrossel",
+      "linha": "Liderança (Dale Carnegie)",
+      "slides": [
+        {"tipo": "capa", "kicker": "GESTÃO DE PESSOAS (DALE CARNEGIE)", "titulo": "Dar feedback que realmente muda comportamento", "subtitulo": "3 princípios práticos que uso com líderes de PME"},
+        {"tipo": "conteudo", "numero": "1", "titulo": "Separe o fato da interpretação", "corpo": "Descreva o comportamento observável, não a intenção que você imagina. \"Chegou atrasado 3 vezes\" é fato. \"Não se importa\" é interpretação — e gera defesa, não mudança."},
+        {"tipo": "conteudo", "numero": "2", "titulo": "Feedback é sobre o futuro, não o passado", "corpo": "Apontar o erro não muda nada sozinho. A pergunta que abre conversa é: \"o que precisa ser diferente da próxima vez?\" — aí a pessoa participa da solução."},
+        {"tipo": "conteudo", "numero": "3", "titulo": "Frequência vence intensidade", "corpo": "Uma conversa por trimestre não forma ninguém. Feedback semanal, curto e específico muda comportamento mais rápido que uma reunião anual bem preparada."},
+        {"tipo": "conteudo", "titulo": "O erro mais comum", "corpo": "Misturar feedback com desabafo. Se você está irritado, espere — feedback dado no calor da emoção vira crítica, não desenvolvimento."},
+        {"tipo": "conteudo", "titulo": "Onde isso mais falha em PME", "corpo": "Gestores promovidos por serem bons tecnicamente, sem preparo pra dar retorno estruturado à equipe. Habilidade técnica não ensina a liderar gente."},
+        {"tipo": "cta", "titulo": "Salva pra usar essa semana", "corpo": "Qual desses 3 princípios é mais difícil de praticar no teu dia a dia de gestão?"}
+      ],
+      "legenda": "Dar feedback é uma das habilidades mais subestimadas na gestão de PME.\n\nNão porque os gestores não queiram dar retorno — mas porque ninguém ensinou como fazer isso de forma que realmente mude comportamento.\n\nNeste carrossel compartilhei 3 princípios práticos que uso no desenvolvimento de líderes.\n\nSalva para usar na tua próxima conversa com a equipe. 👆\n\nQual desses princípios é mais difícil de praticar no teu dia a dia de gestão?\n\n#Liderança #GestãoDePessoas #DaleCarnegie #PME #ValeDoTaquari"
+    },
+    {
+      "id": "ig-c3",
+      "canal": "instagram",
+      "formato": "carrossel",
+      "linha": "Tese Regional",
+      "slides": [
+        {"tipo": "capa", "kicker": "DIAGNÓSTICO (DALE CARNEGIE)", "titulo": "5 perguntas pra saber se teu negócio está saudável", "subtitulo": "Sem MBA. Só honestidade."},
+        {"tipo": "conteudo", "numero": "1", "titulo": "Ele funciona sem você?", "corpo": "Se você tirar 2 semanas de férias sem internet, a operação continua entregando no mesmo padrão? Se não, você não tem empresa — tem um emprego caro."},
+        {"tipo": "conteudo", "numero": "2", "titulo": "Você sabe sua margem real?", "corpo": "Não o faturamento. A margem, produto a produto, cliente a cliente. Se a resposta é \"mais ou menos\", o negócio está sendo administrado no escuro."},
+        {"tipo": "conteudo", "numero": "3", "titulo": "As decisões importantes têm dono?", "corpo": "Ou tudo passa pela sua aprovação — desde comprar papel até fechar contrato grande? Concentração de decisão é o teto de crescimento mais comum que existe."},
+        {"tipo": "conteudo", "numero": "4", "titulo": "Sua equipe sabe pra onde a empresa vai?", "corpo": "Pergunte a três pessoas do time qual é a prioridade dos próximos 12 meses. Se as respostas forem diferentes, a estratégia não está clara — está só na sua cabeça."},
+        {"tipo": "conteudo", "numero": "5", "titulo": "Você lidera ou apaga incêndio?", "corpo": "Quanto da sua semana é reativo — resolver problema que já estourou — versus proativo, prevenindo o próximo? A proporção conta a verdade."},
+        {"tipo": "cta", "titulo": "Responde com calma", "corpo": "Comenta aqui qual pergunta foi mais difícil de responder."}
+      ],
+      "legenda": "Não precisa de um MBA para saber se teu negócio está saudável.\n\nPrecisa responder 5 perguntas com honestidade.\n\nSalva esse carrossel e responde cada uma com calma — de preferência longe do operacional do dia.\n\nO quanto tu conseguires responder com clareza já te diz muito sobre onde o negócio precisa de atenção.\n\n👇 Comenta qual pergunta foi mais difícil de responder.\n\n#GestãoEmpresarial #PME #Empreendedorismo #LiderançaEmpresarial #ValeDoTaquari"
+    }
+  ]
+}
