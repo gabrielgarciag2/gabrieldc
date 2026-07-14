@@ -50,7 +50,7 @@ ENTRADA: métricas da semana anterior (JSON do Metricool) + histórico de temas 
 SAÍDA: JSON estrito com o lote da semana:
 - 3 posts LinkedIn (ter/qui/sex 08h): texto completo, 900-1400 caracteres, gancho forte na 1ª linha, 3-4 hashtags.
 - 3 carrosséis IG (seg/qua/sex 11h30): 6-8 slides cada, com kicker, titulo, corpo por slide (títulos ≤ 60 caracteres, corpo ≤ 220), + legenda completa com hashtags.
-- 2 cards IG (ter/sáb 07h30): 1 frase de impacto ≤ 90 caracteres + legenda.
+- 2 cards IG (ter/sáb 07h30): frase de impacto em duas partes — "gancho" (contexto/problema, ≤ 90 caracteres, tom neutro) + "virada" (conclusão/insight que fecha o raciocínio, ≤ 90 caracteres) — + legenda.
 - Para cada peça: linha editorial, data/hora, e campo racional (1 frase: por que este tema agora, com base nas métricas).
 
 AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-3. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
@@ -81,7 +81,8 @@ CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), se
       "legenda": "<presente se formato=carrossel ou formato=card>",
 
       // presente SOMENTE se canal=instagram e formato=card:
-      "frase": "<=90 caracteres"
+      "gancho": "<=90 caracteres, frase de contexto/problema (1a parte, tom neutro)",
+      "virada": "<=90 caracteres, frase de conclusao/insight (2a parte, o giro do pensamento)"
     }
   ]
 }
@@ -259,7 +260,8 @@ def _mock_batch(user_payload: dict) -> dict:
                 "formato": "card",
                 "linha": "Tese Regional",
                 "publicar_em": datas["card_ter_07h30"],
-                "frase": "O interior do RS é uma potência empresarial invisível.",
+                "gancho": "O interior do RS parece pequeno no mapa.",
+                "virada": "Mas é uma potência empresarial invisível de fora.",
                 "legenda": (
                     "Tem empresa no Vale do Taquari crescendo em ritmo de dois dígitos, e "
                     "você nunca ouviu falar dela. O interior gaúcho tem uma força empresarial "

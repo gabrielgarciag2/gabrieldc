@@ -13,7 +13,7 @@ Reprova uma peca (retorna motivo(s) de falha) se detectar:
   4. Campos obrigatorios ausentes ou limites de caracteres estourados:
        - LinkedIn (texto): 900-1400 caracteres
        - Carrossel: titulo de slide <= 60 chars, corpo de slide <= 220 chars
-       - Card: frase <= 90 chars
+       - Card: gancho <= 90 chars, virada <= 90 chars
 
 Uso pelo orquestrador (run.py):
     ok, motivos = validate_peca(peca)
@@ -44,7 +44,8 @@ LINKEDIN_MIN_CHARS = 900
 LINKEDIN_MAX_CHARS = 1400
 CAROUSEL_TITLE_MAX = 60
 CAROUSEL_BODY_MAX = 220
-CARD_MAX_CHARS = 90
+GANCHO_MAX_CHARS = 90
+VIRADA_MAX_CHARS = 90
 
 
 def _load_blocklist() -> list:
@@ -64,7 +65,7 @@ def _all_text_fields(peca: dict) -> list:
     """Extrai todos os campos de texto livre de uma peca, para varredura
     de regex/blocklist independente do formato (texto, carrossel, card)."""
     textos = []
-    for campo in ("texto", "legenda", "racional", "frase"):
+    for campo in ("texto", "legenda", "racional", "gancho", "virada"):
         val = peca.get(campo)
         if isinstance(val, str):
             textos.append(val)
@@ -144,11 +145,16 @@ def _check_campos_obrigatorios_e_limites(peca: dict) -> list:
             motivos.append("Carrossel sem campo 'legenda'.")
 
     elif canal == "instagram" and formato == "card":
-        frase = peca.get("frase")
-        if not frase:
-            motivos.append("Card sem campo 'frase'.")
-        elif len(frase) > CARD_MAX_CHARS:
-            motivos.append(f"Card: frase com {len(frase)} chars (max {CARD_MAX_CHARS}).")
+        gancho = peca.get("gancho")
+        virada = peca.get("virada")
+        if not gancho:
+            motivos.append("Card sem campo 'gancho'.")
+        elif len(gancho) > GANCHO_MAX_CHARS:
+            motivos.append(f"Card: gancho com {len(gancho)} chars (max {GANCHO_MAX_CHARS}).")
+        if not virada:
+            motivos.append("Card sem campo 'virada'.")
+        elif len(virada) > VIRADA_MAX_CHARS:
+            motivos.append(f"Card: virada com {len(virada)} chars (max {VIRADA_MAX_CHARS}).")
         if not peca.get("legenda"):
             motivos.append("Card sem campo 'legenda'.")
 

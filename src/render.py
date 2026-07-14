@@ -37,6 +37,19 @@ WHITE = (255, 255, 255)
 OFFWHITE = (247, 247, 245)
 GRAY = (90, 96, 108)
 
+# Paleta do card branco (retrato + gancho/virada).
+CARD_BLACK = (17, 17, 20)
+CARD_BLUE = (10, 102, 194)
+CARD_GRAY = (110, 116, 128)
+CARD_GRAY_DARK = (70, 76, 88)
+CARD_DIVIDER = (225, 227, 230)
+CARD_ICON = (60, 64, 72)
+
+PHOTO_PATH = Path(__file__).resolve().parent.parent / "assets" / "gabriel-garcia.jpg"
+CARD_NAME = "Gabriel Garcia"
+CARD_ROLE_LINE1 = "CEO Dale Carnegie Vale do Taquari"
+CARD_ROLE_LINE2 = "Consultor de Gestão | Lajeado/RS"
+
 # Caminhos padrao das fontes DejaVu (presentes por default na maioria das
 # distros Linux usadas pelo runner do GitHub Actions / ubuntu-latest).
 FB_CANDIDATES = [
@@ -254,27 +267,135 @@ def slide_cta(title, body, idx, total) -> Image.Image:
     return img
 
 
-def slide_card(frase: str) -> Image.Image:
-    """Card unico (1 frase de impacto, sem paginacao/footer de carrossel,
-    mas mantendo o sistema visual: capa navy + kicker + rodape com @)."""
-    img = Image.new("RGB", (W, H), NAVY)
-    d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, W, 14], fill=GOLD)
-    d.rectangle([80, 170, 150, 178], fill=GOLD)
-    d.text((80, 200), "GABRIEL GARCIA", font=font(True, 30), fill=GOLD)
+def _circular_photo(path: Path, diameter: int) -> Optional[Image.Image]:
+    """Carrega a foto real do perfil e recorta em circulo (cover-crop
+    quadrado + mascara elipse). Retorna None (e loga aviso) se o arquivo
+    nao existir — o card e renderizado sem foto nesse caso, nunca com
+    imagem gerada/substituta."""
+    if not path.exists():
+        logger.warning("Foto de perfil nao encontrada em %s — card sera renderizado sem foto.", path)
+        return None
+    img = Image.open(path).convert("RGB")
+    w, h = img.size
+    side = min(w, h)
+    left, top = (w - side) // 2, (h - side) // 2
+    img = img.crop((left, top, left + side, top + side)).resize((diameter, diameter), Image.LANCZOS)
+    mask = Image.new("L", (diameter, diameter), 0)
+    ImageDraw.Draw(mask).ellipse([0, 0, diameter, diameter], fill=255)
+    out = Image.new("RGBA", (diameter, diameter))
+    out.paste(img, (0, 0), mask)
+    return out
 
-    maxw = W - 160
-    max_h = (H - 240) - 300
-    f, frase_final, _ = fit_font_and_wrap(
-        d, frase, True, 80, maxw, max(max_h, MIN_FONT_SIZE * 2), 1.25, label="card.frase"
+
+def _linkedin_badge(d: ImageDraw.ImageDraw, x: int, y: int, size: int) -> None:
+    d.rounded_rectangle([x, y, x + size, y + size], radius=max(4, int(size * 0.18)), fill=CARD_BLUE)
+    bf = font(True, int(size * 0.6))
+    tw = d.textlength("in", font=bf)
+    d.text((x + (size - tw) / 2, y + size * 0.16), "in", font=bf, fill=WHITE)
+
+
+def _icon_comment(d: ImageDraw.ImageDraw, x: int, y: int, s: int, color, width: int = 5) -> None:
+    d.rounded_rectangle([x, y, x + s, y + s * 0.78], radius=s * 0.22, outline=color, width=width)
+    d.polygon(
+        [(x + s * 0.16, y + s * 0.78 - 2), (x + s * 0.16, y + s * 1.02), (x + s * 0.42, y + s * 0.78 - 2)],
+        fill=color,
     )
-    # centraliza verticalmente dentro da area disponivel
-    lines = wrap(d, frase_final, f, maxw)
-    block_h = int(len(lines) * f.size * 1.25)
-    y = 300 + max(0, (max_h - block_h) // 2)
-    draw_text_block(d, frase_final, f, 80, y, maxw, WHITE, 1.25)
 
-    d.text((80, H - 100), "@gabrielgarciadc", font=font(True, 30), fill=WHITE)
+
+def _icon_heart(d: ImageDraw.ImageDraw, x: int, y: int, s: int, color) -> None:
+    # Glifo de coracao (contorno) da propria fonte DejaVu Sans — mais limpo
+    # e fiel que uma aproximacao desenhada com primitivas.
+    f = font(True, int(s * 1.55))
+    d.text((x, y - s * 0.28), "\u2661", font=f, fill=color)
+
+
+def _icon_share(d: ImageDraw.ImageDraw, x: int, y: int, s: int, color, width: int = 4) -> None:
+    r = s * 0.1
+    p1, p2, p3 = (x, y + s * 0.5), (x + s, y), (x + s, y + s)
+    d.line([p1, p2], fill=color, width=width)
+    d.line([p1, p3], fill=color, width=width)
+    for p in (p1, p2, p3):
+        d.ellipse([p[0] - r, p[1] - r, p[0] + r, p[1] + r], outline=color, width=width)
+
+
+def _fit_gancho_virada(
+    d: ImageDraw.ImageDraw, gancho: str, virada: str, maxw: int, max_h: int,
+    lh: float = 1.28, start_size: int = 64,
+) -> tuple:
+    """Encontra o maior tamanho de fonte (ate MIN_FONT_SIZE) em que gancho
+    + virada, wrapped separadamente (cada um comeca em linha nova), cabem
+    juntos em max_h. Retorna (font, linhas_gancho, linhas_virada)."""
+    size = start_size
+    while size >= MIN_FONT_SIZE:
+        f = font(True, size)
+        g_lines = wrap(d, gancho, f, maxw)
+        v_lines = wrap(d, virada, f, maxw)
+        total_h = int((len(g_lines) + len(v_lines)) * f.size * lh)
+        if total_h <= max_h:
+            return f, g_lines, v_lines
+        size -= FONT_STEP
+    f = font(True, MIN_FONT_SIZE)
+    logger.warning("Overflow em card.gancho/virada: usando fonte minima (%dpx) mesmo sem caber.", MIN_FONT_SIZE)
+    return f, wrap(d, gancho, f, maxw), wrap(d, virada, f, maxw)
+
+
+def slide_card(gancho: str, virada: str) -> Image.Image:
+    """Card unico: fundo branco, foto de perfil circular, nome + badge
+    LinkedIn, subtitulo (cargo), frase em duas cores (gancho preto +
+    virada azul), divisor e rodape com icones + @gabrielgarciadc."""
+    img = Image.new("RGB", (W, H), WHITE)
+    d = ImageDraw.Draw(img)
+    pad = 80
+
+    photo_d = 110
+    photo_y = 100
+    photo = _circular_photo(PHOTO_PATH, photo_d)
+    if photo:
+        img.paste(photo, (pad, photo_y), photo)
+    text_x = pad + photo_d + 28
+
+    name_font = font(True, 44)
+    d.text((text_x, photo_y + 4), CARD_NAME, font=name_font, fill=CARD_BLACK)
+    name_w = d.textlength(CARD_NAME, font=name_font)
+    _linkedin_badge(d, int(text_x + name_w + 14), photo_y + 8, 32)
+
+    sub_font = font(False, 27)
+    d.text((text_x, photo_y + 58), CARD_ROLE_LINE1, font=sub_font, fill=CARD_GRAY)
+    d.text((text_x, photo_y + 92), CARD_ROLE_LINE2, font=sub_font, fill=CARD_GRAY)
+
+    maxw = W - 2 * pad
+    quote_top = photo_y + photo_d + 70
+    divider_y = H - 220
+    max_h = divider_y - quote_top - 30
+    f, gancho_lines, virada_lines = _fit_gancho_virada(
+        d, gancho, virada, maxw, max(max_h, MIN_FONT_SIZE * 2)
+    )
+    lh = 1.28
+    block_h = int((len(gancho_lines) + len(virada_lines)) * f.size * lh)
+    # Alinha perto do topo da area (nao centraliza no espaco todo ate o
+    # divisor) para que frases curtas nao fiquem "flutuando" no meio.
+    y = quote_top + min(40, max(0, (max_h - block_h) // 2))
+    for ln in gancho_lines:
+        d.text((pad, y), ln, font=f, fill=CARD_BLACK)
+        y += int(f.size * lh)
+    for ln in virada_lines:
+        d.text((pad, y), ln, font=f, fill=CARD_BLUE)
+        y += int(f.size * lh)
+
+    d.line([(pad, divider_y), (W - pad, divider_y)], fill=CARD_DIVIDER, width=2)
+
+    icon_y = divider_y + 45
+    icon_s = 38
+    gap = 32
+    _icon_comment(d, pad, icon_y, icon_s, CARD_ICON)
+    _icon_heart(d, pad + icon_s + gap, icon_y, icon_s, CARD_ICON)
+    _icon_share(d, pad + 2 * (icon_s + gap), icon_y, icon_s, CARD_ICON)
+
+    handle_font = font(True, 30)
+    handle = "@gabrielgarciadc"
+    hw = d.textlength(handle, font=handle_font)
+    d.text((W - pad - hw, icon_y + 4), handle, font=handle_font, fill=CARD_GRAY_DARK)
+
     return img
 
 
@@ -314,7 +435,7 @@ def _render_carrossel(peca: dict, out_dir: Path) -> list:
 
 
 def _render_card(peca: dict, out_dir: Path) -> list:
-    img = slide_card(peca.get("frase", ""))
+    img = slide_card(peca.get("gancho", ""), peca.get("virada", ""))
     fpath = out_dir / f"{peca['id']}.png"
     img.save(fpath, optimize=True)
     return [fpath]
