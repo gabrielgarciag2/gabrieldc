@@ -53,7 +53,45 @@ SAÍDA: JSON estrito com o lote da semana:
 - 2 cards IG (ter/sáb 07h30): 1 frase de impacto ≤ 90 caracteres + legenda.
 - Para cada peça: linha editorial, data/hora, e campo racional (1 frase: por que este tema agora, com base nas métricas).
 
-AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-3. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido."""
+AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-3. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
+
+CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), sem acrescentar, remover ou renomear chaves. A resposta deve ser um único objeto JSON com esta forma exata:
+
+{
+  "semana": "<data da segunda-feira alvo, YYYY-MM-DD, igual ao campo 'semana' da entrada>",
+  "pecas": [
+    {
+      "id": "<slug curto único, ex: 'li-1', 'ig-c1', 'ig-card1'>",
+      "canal": "linkedin" | "instagram",
+      "formato": "texto" | "carrossel" | "card",
+      "linha": "Mentoria com o Especialista" | "Framework Próprio" | "Dilema de Sócio" | "Liderança (Dale Carnegie)" | "Tese Regional",
+      "publicar_em": "<um dos valores de datas_alvo_semana da entrada, formato YYYY-MM-DDTHH:MM:SS>",
+      "racional": "<1 frase: por que este tema agora>",
+
+      // presente SOMENTE se canal=linkedin (formato=texto):
+      "texto": "<900-1400 caracteres>",
+
+      // presente SOMENTE se canal=instagram e formato=carrossel:
+      "slides": [
+        {"tipo": "capa", "kicker": "<linha editorial em maiusculas>", "titulo": "<=60 chars>", "subtitulo": null},
+        {"tipo": "conteudo", "numero": "1", "titulo": "<=60 chars>", "corpo": "<=220 chars>"},
+        {"tipo": "conteudo", "numero": "2", "titulo": "<=60 chars>", "corpo": "<=220 chars>"},
+        {"tipo": "cta", "titulo": "<=60 chars>", "corpo": "<=220 chars>"}
+      ],
+      "legenda": "<presente se formato=carrossel ou formato=card>",
+
+      // presente SOMENTE se canal=instagram e formato=card:
+      "frase": "<=90 caracteres"
+    }
+  ]
+}
+
+Regras adicionais do contrato:
+- O esquema acima é apenas ilustrativo: os comentários iniciados por "//" e os placeholders entre "<>" ou com "|" NÃO devem aparecer no seu JSON de saída — são apenas explicações de formato.
+- Exatamente 8 peças no total: 3 linkedin/texto + 3 instagram/carrossel (6-8 slides cada, incluindo 1 capa + 1 cta) + 2 instagram/card.
+- Todo carrossel e todo card devem ter campo "legenda" com hashtags.
+- Nunca omita "pecas" nem devolva lista vazia — isso é tratado como falha total do lote.
+- Sua resposta inteira deve ser um único objeto JSON válido (RFC 8259), sem comentários, sem texto antes/depois, sem cercas de código ```."""
 
 
 def _strip_code_fences(raw: str) -> str:
