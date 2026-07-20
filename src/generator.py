@@ -51,10 +51,10 @@ LEIS ABSOLUTAS (violação = falha crítica):
 
 ENTRADA: métricas da semana anterior (JSON do Metricool) + histórico de temas já publicados (não repetir tema em 45 dias).
 
-CADÊNCIA E PUBLICAÇÃO (padrão atual): 2 peças por dia, todos os dias da semana (segunda a domingo) — 14 peças por semana — publicadas em horários de pico, 08h00 e 19h00 (America/Sao_Paulo). Cada peça é publicada SIMULTANEAMENTE em Instagram e LinkedIn, como um único post multi-rede (mesma imagem, mesmo texto) — não crie peças LinkedIn-only ou Instagram-only separadas.
+CADÊNCIA E PUBLICAÇÃO (padrão atual, otimizado por dados de desempenho do Metricool): 2 peças por dia, todos os dias da semana (segunda a domingo) — 14 peças por semana — publicadas em 11h30 e 19h00 (America/Sao_Paulo). Esses dois horários foram escolhidos porque concentram o pico de engajamento tanto no Instagram (pico ~11h-12h e ~19h-20h) quanto no LinkedIn (pico acentuado às 11h, muito acima de qualquer horário da manhã cedo). Cada peça é publicada SIMULTANEAMENTE em Instagram e LinkedIn, como um único post multi-rede (mesma imagem, mesmo texto) — não crie peças LinkedIn-only ou Instagram-only separadas.
 
 SAÍDA: JSON estrito com o lote da semana:
-- 14 peças (2 por dia, um slot 08h e um slot 19h), cada uma no formato "card" (frase de impacto em duas partes) OU "carrossel" (6-8 slides).
+- 14 peças (2 por dia, um slot 11h30 e um slot 19h00), cada uma no formato "card" (frase de impacto em duas partes) OU "carrossel" (6-8 slides).
 - Card: "gancho" (contexto/problema, ≤ 90 caracteres, tom neutro) + "virada" (conclusão/insight que fecha o raciocínio, ≤ 90 caracteres).
 - Carrossel: 6-8 slides, com kicker, titulo, corpo por slide (títulos ≤ 60 caracteres, corpo ≤ 220 caracteres), incluindo 1 capa + 1 cta.
 - Todo card e todo carrossel leva também um campo "legenda" de 900-1400 caracteres com gancho forte na 1ª linha e hashtags-base (#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas) — esse texto serve tanto de legenda do Instagram quanto de corpo do post do LinkedIn.
@@ -114,12 +114,24 @@ def _strip_code_fences(raw: str) -> str:
     return text
 
 
-HORARIOS_PICO = ("08h", "19h")  # America/Sao_Paulo — padrao atual: 2 posts/dia
+HORARIOS_PICO = ("11h30", "19h00")  # America/Sao_Paulo — padrao atual: 2 posts/dia
+# Horarios definidos com base em getBestTimeToPostByNetwork (Metricool, jul/2026):
+# Instagram tem pico ~11h-12h e ~19h-20h; LinkedIn tem pico acentuado as 11h
+# (3-6x o engajamento do horario 08h, que foi o padrao anterior e foi trocado
+# por essa analise). 19h00 continua bom para ambas as redes.
+
+
+def _hora_para_horario(hora: str) -> str:
+    """Converte um slot tipo '11h30' ou '19h00' (ou o formato legado '08h')
+    para 'HH:MM:00'."""
+    hh, _, mm = hora.partition("h")
+    mm = mm or "00"
+    return f"{hh}:{mm}:00"
 
 
 def _proximas_datas_uteis(hoje: datetime) -> dict:
     """Calcula as datas-alvo da proxima semana (segunda a domingo) a partir
-    de `hoje`, seguindo a cadencia atual de 2 peças/dia (08h e 19h)."""
+    de `hoje`, seguindo a cadencia atual de 2 peças/dia (11h30 e 19h00)."""
     dias_ate_segunda = (7 - hoje.weekday()) % 7
     dias_ate_segunda = dias_ate_segunda or 7
     proxima_segunda = hoje + timedelta(days=dias_ate_segunda)
@@ -132,16 +144,17 @@ def _proximas_datas_uteis(hoje: datetime) -> dict:
 
 def _build_user_payload(metrics: dict, temas_recentes: list, hoje: datetime = None) -> dict:
     """Monta o payload de entrada do Cerebro. `datas_alvo_semana` agora tem
-    14 slots (2 por dia, todos os 7 dias da semana, 08h/19h America/Sao_Paulo)
-    — padrao de cadencia atual (ver SYSTEM_PROMPT). Chaves no formato
-    '<dia>_<hora>', ex: 'segunda_08h', 'segunda_19h', ..., 'domingo_19h'."""
+    14 slots (2 por dia, todos os 7 dias da semana, 11h30/19h00 America/Sao_Paulo,
+    horarios com melhor desempenho medido via getBestTimeToPostByNetwork) —
+    padrao de cadencia atual (ver SYSTEM_PROMPT). Chaves no formato
+    '<dia>_<hora>', ex: 'segunda_11h30', 'segunda_19h00', ..., 'domingo_19h00'."""
     hoje = hoje or datetime.now()
     datas = _proximas_datas_uteis(hoje)
     nomes = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"]
     datas_alvo_semana = {}
     for nome in nomes:
         for hora in HORARIOS_PICO:
-            datas_alvo_semana[f"{nome}_{hora}"] = f"{datas[nome]}T{hora[:2]}:00:00"
+            datas_alvo_semana[f"{nome}_{hora}"] = f"{datas[nome]}T{_hora_para_horario(hora)}"
     return {
         "metricas_semana_anterior": metrics,
         "temas_ultimos_45_dias": temas_recentes,
@@ -171,7 +184,7 @@ def _mock_batch(user_payload: dict) -> dict:
                 "canal": "instagram",
                 "formato": "carrossel",
                 "linha": "Mentoria com o Especialista",
-                "publicar_em": datas["segunda_08h"],
+                "publicar_em": datas["segunda_11h30"],
                 "racional": (
                     "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
                     "carrossel do contrato atual (dual-canal) para teste de dry-run."
@@ -240,7 +253,7 @@ def _mock_batch(user_payload: dict) -> dict:
                 "canal": "instagram",
                 "formato": "card",
                 "linha": "Tese Regional",
-                "publicar_em": datas["segunda_19h"],
+                "publicar_em": datas["segunda_19h00"],
                 "racional": (
                     "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
                     "card do contrato atual (dual-canal) para teste de dry-run."
