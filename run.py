@@ -95,9 +95,32 @@ def _tema_da_peca(peca: dict) -> str:
                 return slide.get("titulo", peca.get("id", ""))
     if peca.get("formato") == "card":
         return peca.get("frase", peca.get("id", ""))
+    if peca.get("formato") == "reel":
+        roteiro = peca.get("roteiro") or {}
+        return roteiro.get("gancho_visual") or peca.get("linha", peca.get("id", ""))
     if peca.get("canal") == "linkedin":
         return (peca.get("texto", "")[:100])
     return peca.get("id", "desconhecida")
+
+
+def _reels_pendentes(lote: dict, resultado_publicacao: dict) -> list:
+    """Coleta as pecas formato=reel sinalizadas por schedule_posts() como
+    midia_pendente_manual, com o roteiro completo, para o relatorio
+    semanal — e assim a unica lista de 'o que gravar essa semana' que
+    Gabriel precisa consultar."""
+    pendentes = []
+    for peca in lote.get("pecas", []):
+        info = resultado_publicacao.get(peca.get("id"), {})
+        if info.get("status") != "midia_pendente_manual":
+            continue
+        pendentes.append({
+            "id": peca.get("id"),
+            "linha": peca.get("linha"),
+            "publicar_em": peca.get("publicar_em"),
+            "legenda": peca.get("legenda"),
+            "roteiro": peca.get("roteiro") or info.get("roteiro"),
+        })
+    return pendentes
 
 
 def revalidate_and_filter(lote: dict) -> tuple:
@@ -230,10 +253,18 @@ def run(dry_run: bool = False) -> int:
 
         # --- 9. send_report() -------------------------------------------
         logger.info("Etapa 9/9: send_report()")
+        reels_pendentes = _reels_pendentes(lote, resultado_publicacao)
+        if reels_pendentes:
+            logger.info(
+                "%d reel(s) com midia pendente de gravacao manual nesta semana.",
+                len(reels_pendentes),
+            )
         if dry_run:
             logger.info("[DRY-RUN] Relatorio por e-mail NAO sera enviado de verdade (best-effort skip).")
         else:
-            reporter_mod.send_report(lote, resultado_publicacao, metrics, avisos_validador)
+            reporter_mod.send_report(
+                lote, resultado_publicacao, metrics, avisos_validador, reels_pendentes
+            )
 
         # --- Plano final (sempre impresso, especialmente relevante em dry-run) ---
         _print_plan(lote, media_por_peca, media_urls_por_peca, resultado_publicacao, avisos_validador, dry_run)
@@ -276,6 +307,12 @@ def _print_plan(lote, media_por_peca, media_urls_por_peca, resultado_publicacao,
         print("\nAvisos do validador:")
         for a in avisos_validador:
             print(f"  - {a}")
+
+    reels_pendentes = _reels_pendentes(lote, resultado_publicacao)
+    if reels_pendentes:
+        print("\nReels com midia pendente de gravacao manual (NAO enviados ao Metricool):")
+        for r in reels_pendentes:
+            print(f"  - {r['id']} ({r['publicar_em']}) — {r['linha']}")
 
     print("\n" + "=" * 78 + "\n")
 

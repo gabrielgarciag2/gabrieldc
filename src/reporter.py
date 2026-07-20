@@ -7,6 +7,10 @@ send_report() monta e envia um e-mail com:
   - pecas agendadas nesta semana (data + titulo/resumo + link do planner)
   - metricas do ciclo anterior
   - avisos gerados pelo validador (pecas reprovadas/regeneradas)
+  - reels com midia pendente de gravacao manual (roteiro completo: gancho,
+    beats, direcao de cena, legenda) — nunca sao auto-publicados pelo
+    publisher.py (ver guarda em schedule_posts()), entao esta secao e a
+    unica lista de "o que gravar essa semana" que existe no fluxo
 
 Assunto: "Agente de Conteúdo · semana {data} · {n} peças no ar"
 
@@ -19,6 +23,7 @@ from __future__ import annotations
 import logging
 import os
 import traceback
+from typing import Optional
 
 logger = logging.getLogger("agente.reporter")
 
@@ -38,10 +43,46 @@ def _peca_titulo(peca: dict) -> str:
         return peca.get("id", "")
     if peca.get("formato") == "card":
         return peca.get("frase", peca.get("id", ""))
+    if peca.get("formato") == "reel":
+        roteiro = peca.get("roteiro") or {}
+        return roteiro.get("gancho_visual") or peca.get("linha", peca.get("id", ""))
     return peca.get("id", "")
 
 
-def _build_html(lote: dict, resultado_publicacao: dict, metrics: dict, avisos_validador: list) -> str:
+def _build_reel_html(reel: dict) -> str:
+    roteiro = reel.get("roteiro") or {}
+    direcao = roteiro.get("direcao_cena") or {}
+    beats = roteiro.get("beats") or []
+
+    linhas_beats = "".join(
+        f"<tr><td>{b.get('tempo', '')}</td><td>{b.get('fala', '')}</td>"
+        f"<td>{b.get('texto_tela', '')}</td></tr>"
+        for b in beats
+    ) or "<tr><td colspan='3'>(sem beats)</td></tr>"
+
+    return f"""
+    <li style="margin-bottom:18px;">
+      <strong>{reel.get('publicar_em', '')}</strong> — {reel.get('linha', '')}
+      <br/><em>{roteiro.get('gancho_visual', '')}</em>
+      ({roteiro.get('duracao_alvo_seg', '?')}s)
+      <table border="1" cellpadding="6" cellspacing="0" style="margin-top:6px;border-collapse:collapse;">
+        <tr><th>tempo</th><th>fala</th><th>texto na tela</th></tr>
+        {linhas_beats}
+      </table>
+      <ul>
+        <li>fundo: {direcao.get('fundo', '')}</li>
+        <li>ambiente: {direcao.get('ambiente', '')}</li>
+        <li>enquadramento: {direcao.get('enquadramento', '')}</li>
+        <li>velocidade de fala: {direcao.get('velocidade_fala', '')}</li>
+        <li>expressao: {direcao.get('expressao', '')}</li>
+      </ul>
+      <small>legenda: {reel.get('legenda', '')}</small>
+    </li>
+    """
+
+
+def _build_html(lote: dict, resultado_publicacao: dict, metrics: dict, avisos_validador: list,
+                 reels_pendentes: Optional[list] = None) -> str:
     n = len(lote.get("pecas", []))
     semana = lote.get("semana", "")
 
@@ -66,10 +107,22 @@ def _build_html(lote: dict, resultado_publicacao: dict, metrics: dict, avisos_va
 
     linhas_avisos = "".join(f"<li>{a}</li>" for a in avisos_validador) or "<li>Nenhum aviso.</li>"
 
+    reels_pendentes = reels_pendentes or []
+    if reels_pendentes:
+        bloco_reels = f"""
+    <h3>🎥 Reels pendentes de gravação ({len(reels_pendentes)})</h3>
+    <p><small>Estes NÃO foram enviados ao Metricool — grave o vídeo seguindo o roteiro
+    abaixo e suba manualmente antes do horário de publicação.</small></p>
+    <ul>{''.join(_build_reel_html(r) for r in reels_pendentes)}</ul>
+    """
+    else:
+        bloco_reels = ""
+
     return f"""
     <h2>Agente de Conteúdo · semana {semana} · {n} peças no ar</h2>
     <h3>Peças agendadas</h3>
     <ul>{''.join(linhas_pecas)}</ul>
+    {bloco_reels}
     <h3>Métricas do ciclo anterior</h3>
     <ul>{linhas_metricas}</ul>
     <h3>Avisos do validador</h3>
@@ -80,7 +133,8 @@ def _build_html(lote: dict, resultado_publicacao: dict, metrics: dict, avisos_va
 
 
 def send_report(lote: dict, resultado_publicacao: dict, metrics: dict,
-                 avisos_validador: Optional[list] = None) -> bool:
+                 avisos_validador: Optional[list] = None,
+                 reels_pendentes: Optional[list] = None) -> bool:
     """Envia o relatorio semanal por e-mail via Resend. Retorna True se
     enviado com sucesso, False em qualquer outra situacao (sem
     credenciais, erro de rede etc — nunca levanta excecao para o
@@ -101,7 +155,7 @@ def send_report(lote: dict, resultado_publicacao: dict, metrics: dict,
         import resend
 
         resend.api_key = os.environ["RESEND_API_KEY"]
-        html = _build_html(lote, resultado_publicacao, metrics, avisos_validador)
+        html = _build_html(lote, resultado_publicacao, metrics, avisos_validador, reels_pendentes)
         resend.Emails.send({
             "from": os.environ.get("REPORT_FROM_EMAIL", "onboarding@resend.dev"),
             "to": [os.environ["REPORT_EMAIL"]],

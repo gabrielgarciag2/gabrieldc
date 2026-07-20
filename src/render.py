@@ -461,6 +461,17 @@ def render(peca_json: dict, output_dir: Optional[Path] = None, semana: str = "se
         return _render_carrossel(peca_json, out_dir)
     if canal == "instagram" and formato == "card":
         return _render_card(peca_json, out_dir)
+    if canal == "instagram" and formato == "reel":
+        # Reel exige video real gravado por Gabriel — nada aqui gera midia
+        # automaticamente (nao ha imagem estatica pra "renderizar"). Isso e
+        # esperado, nao um erro: o roteiro (gancho/beats/direcao de cena)
+        # segue no lote e e sinalizado pelo publisher/reporter como
+        # midia_pendente_manual, ate o video ser gravado e anexado.
+        logger.info(
+            "Peca %s e reel — midia pendente de gravacao manual (nada renderizado aqui).",
+            peca_json.get("id"),
+        )
+        return []
 
     logger.warning("Peca %s com canal/formato desconhecido (%s/%s) — nada renderizado.",
                     peca_json.get("id"), canal, formato)

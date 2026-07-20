@@ -14,6 +14,9 @@ Reprova uma peca (retorna motivo(s) de falha) se detectar:
        - LinkedIn (texto): 900-1400 caracteres
        - Carrossel: titulo de slide <= 60 chars, corpo de slide <= 220 chars
        - Card: gancho <= 90 chars, virada <= 90 chars
+       - Reel: roteiro com duracao_alvo_seg (15-45), gancho_visual, pelo
+         menos 1 beat e direcao_cena completa (fundo/ambiente/
+         enquadramento/velocidade_fala/expressao); legenda obrigatoria
 
 Uso pelo orquestrador (run.py):
     ok, motivos = validate_peca(peca)
@@ -74,6 +77,21 @@ def _all_text_fields(peca: dict) -> list:
             val = slide.get(campo)
             if isinstance(val, str):
                 textos.append(val)
+    roteiro = peca.get("roteiro") or {}
+    if isinstance(roteiro, dict):
+        val = roteiro.get("gancho_visual")
+        if isinstance(val, str):
+            textos.append(val)
+        for beat in roteiro.get("beats", []) or []:
+            for campo in ("fala", "texto_tela"):
+                val = beat.get(campo)
+                if isinstance(val, str):
+                    textos.append(val)
+        direcao = roteiro.get("direcao_cena") or {}
+        if isinstance(direcao, dict):
+            for val in direcao.values():
+                if isinstance(val, str):
+                    textos.append(val)
     return textos
 
 
@@ -157,6 +175,44 @@ def _check_campos_obrigatorios_e_limites(peca: dict) -> list:
             motivos.append(f"Card: virada com {len(virada)} chars (max {VIRADA_MAX_CHARS}).")
         if not peca.get("legenda"):
             motivos.append("Card sem campo 'legenda'.")
+
+    elif canal == "instagram" and formato == "reel":
+        roteiro = peca.get("roteiro")
+        if not roteiro or not isinstance(roteiro, dict):
+            motivos.append("Reel sem campo 'roteiro'.")
+        else:
+            duracao = roteiro.get("duracao_alvo_seg")
+            if duracao is None:
+                motivos.append("Reel: roteiro sem 'duracao_alvo_seg'.")
+            else:
+                try:
+                    duracao_num = float(duracao)
+                    if duracao_num < 15 or duracao_num > 45:
+                        motivos.append(
+                            f"Reel: duracao_alvo_seg fora do limite 15-45s (tem {duracao})."
+                        )
+                except (TypeError, ValueError):
+                    motivos.append(f"Reel: duracao_alvo_seg invalida ({duracao!r}).")
+
+            if not roteiro.get("gancho_visual"):
+                motivos.append("Reel: roteiro sem 'gancho_visual'.")
+
+            beats = roteiro.get("beats")
+            if not beats:
+                motivos.append("Reel: roteiro sem 'beats'.")
+
+            direcao = roteiro.get("direcao_cena")
+            campos_direcao = ("fundo", "ambiente", "enquadramento", "velocidade_fala", "expressao")
+            if not direcao or not isinstance(direcao, dict):
+                motivos.append("Reel: roteiro sem 'direcao_cena'.")
+            else:
+                faltando = [c for c in campos_direcao if not direcao.get(c)]
+                if faltando:
+                    motivos.append(
+                        f"Reel: direcao_cena incompleta — faltando {', '.join(faltando)}."
+                    )
+        if not peca.get("legenda"):
+            motivos.append("Reel sem campo 'legenda'.")
 
     else:
         motivos.append(f"Combinacao canal/formato desconhecida: {canal}/{formato}")

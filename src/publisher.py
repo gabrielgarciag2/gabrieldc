@@ -254,6 +254,9 @@ def schedule_posts(lote: dict, media_por_peca: dict, dry_run: bool = False,
       que seria enviado.
     - draft=True: agenda com draft:true (usado no teste de criterio de
       aceite #2, para nao publicar de verdade durante validacao).
+    - Peca formato=reel sem media anexada NUNCA e enviada ao Metricool —
+      fica com status "midia_pendente_manual" ate o video ser gravado e
+      subido manualmente (ver bloco de guarda logo no inicio do loop).
     Falha de UMA peca nao aborta o lote inteiro."""
     resultado_geral = {}
     params = _auth_query_params()
@@ -261,6 +264,26 @@ def schedule_posts(lote: dict, media_por_peca: dict, dry_run: bool = False,
     for peca in lote.get("pecas", []):
         peca_id = peca.get("id", "desconhecida")
         media_urls = media_por_peca.get(peca_id, [])
+
+        if peca.get("formato") == "reel" and not media_urls:
+            # SEGURANCA: nada no pipeline hoje grava/anexa o video do reel
+            # (render.py nao gera midia pra esse formato — ver docstring
+            # de render()). NUNCA cair no fluxo padrao abaixo, que montaria
+            # um payload com autoPublish=True e media=[] — isso poderia
+            # agendar/publicar um post do Instagram sem video. Sinaliza
+            # como pendente de gravacao manual e nao faz nenhuma chamada
+            # de rede (nem em dry-run, nem em execucao real).
+            resultado_geral[peca_id] = {
+                "payload": None,
+                "resultado": None,
+                "status": "midia_pendente_manual",
+                "roteiro": peca.get("roteiro"),
+            }
+            logger.info(
+                "Peca %s (reel) sem video anexado — sinalizada como "
+                "midia_pendente_manual, NAO enviada ao Metricool.", peca_id,
+            )
+            continue
 
         if media_urls and peca.get("canal") == "instagram" and not dry_run:
             # Passo confirmado na doc oficial (normalize/image/url) —
