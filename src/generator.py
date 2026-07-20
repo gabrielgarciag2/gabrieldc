@@ -57,8 +57,10 @@ SAÍDA: JSON estrito com o lote da semana:
 - 14 peças (2 por dia, um slot 11h30 e um slot 19h00), cada uma no formato "card" (frase de impacto em duas partes) OU "carrossel" (6-8 slides).
 - Card: "gancho" (contexto/problema, ≤ 90 caracteres, tom neutro) + "virada" (conclusão/insight que fecha o raciocínio, ≤ 90 caracteres).
 - Carrossel: 6-8 slides, com kicker, titulo, corpo por slide (títulos ≤ 60 caracteres, corpo ≤ 220 caracteres), incluindo 1 capa + 1 cta.
-- Todo card e todo carrossel leva também um campo "legenda" de 900-1400 caracteres com gancho forte na 1ª linha e hashtags-base (#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas) — esse texto serve tanto de legenda do Instagram quanto de corpo do post do LinkedIn.
+- Todo card e todo carrossel leva também um campo "legenda" de 900-1400 caracteres com gancho forte na 1ª linha e um bloco de hashtags no final, seguindo a ESTRATÉGIA DE HASHTAGS abaixo — esse texto serve tanto de legenda do Instagram quanto de corpo do post do LinkedIn.
 - Para cada peça: linha editorial, data/hora, e campo racional (1 frase: por que este tema agora, com base nas métricas ou no mix semanal).
+
+ESTRATÉGIA DE HASHTAGS (rotativa — NUNCA repita o mesmo conjunto de hashtags em peças consecutivas nem no mesmo dia; o conjunto fixo repetido reduz alcance/descoberta no Instagram): use de 6 a 8 hashtags por peça, sendo 2 fixas de marca — #DaleCarnegie #ValeDoTaquari — mais 4 a 6 escolhidas variando a cada peça, com base no tema específico daquela peça, dentre este pool: #Lideranca #GestaoDePessoas #DesenvolvimentoDeLideres #Mentoria #GestaoEmpresarial #RecursosHumanos #RH #Treinamento #Negocios #Consultoria #Carreira #Empreendedorismo #PME #CulturaOrganizacional #AltaPerformance #EmpresaFamiliar #Sucessao #Produtividade #GestaoDeEquipes #GestaoDeResultados #ConfiancaNaLideranca #Financas #Tecnologia #Lajeado #InteriorRS #RS. Exemplo: peça sobre sucessão familiar usa #EmpresaFamiliar #Sucessao; peça sobre indicadores usa #GestaoDeResultados #Produtividade; peça de bastidor local usa #Lajeado #InteriorRS. PROIBIDO usar #coach, #coaching ou qualquer variação — termo banido nesta conta, mesmo que apareça em pesquisas de hashtags populares do nicho.
 
 AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-4. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
 
@@ -97,7 +99,7 @@ Regras adicionais do contrato:
 - O esquema acima é apenas ilustrativo: os comentários iniciados por "//" e os placeholders entre "<>" ou com "|" NÃO devem aparecer no seu JSON de saída — são apenas explicações de formato.
 - Exatamente 14 peças no total, cobrindo todos os slots de datas_alvo_semana da entrada (2 por dia, 7 dias).
 - "canal" é sempre "instagram" (a peça é publicada em ambos os canais a partir do mesmo conteúdo/imagem — não crie peças com canal="linkedin").
-- Todo carrossel e todo card devem ter campo "legenda" com hashtags.
+- Todo carrossel e todo card devem ter campo "legenda" com hashtags seguindo a ESTRATÉGIA DE HASHTAGS (rotativas por tema, nunca o mesmo conjunto repetido em peças consecutivas, nunca #coach/#coaching).
 - Nunca omita "pecas" nem devolva lista vazia — isso é tratado como falha total do lote.
 - Sua resposta inteira deve ser um único objeto JSON válido (RFC 8259), sem comentários, sem texto antes/depois, sem cercas de código ```."""
 
@@ -119,6 +121,29 @@ HORARIOS_PICO = ("11h30", "19h00")  # America/Sao_Paulo — padrao atual: 2 post
 # Instagram tem pico ~11h-12h e ~19h-20h; LinkedIn tem pico acentuado as 11h
 # (3-6x o engajamento do horario 08h, que foi o padrao anterior e foi trocado
 # por essa analise). 19h00 continua bom para ambas as redes.
+
+# ============================================================================
+# HASHTAGS — espelha a secao "ESTRATEGIA DE HASHTAGS" do SYSTEM_PROMPT acima.
+# Mantido aqui como referencia/fonte da verdade para quem for editar o pool
+# manualmente (ex: ao atualizar posts ja agendados no Metricool). NAO usado
+# para montar o SYSTEM_PROMPT dinamicamente — o texto do prompt e' literal
+# (ver nota "NAO EDITAR sem atualizar o Playbook em paralelo" acima), entao
+# qualquer mudanca aqui deve ser replicada manualmente no texto do prompt.
+# ============================================================================
+HASHTAGS_MARCA_FIXA = ("#DaleCarnegie", "#ValeDoTaquari")
+
+HASHTAGS_POOL_ROTATIVO = (
+    "#Lideranca", "#GestaoDePessoas", "#DesenvolvimentoDeLideres", "#Mentoria",
+    "#GestaoEmpresarial", "#RecursosHumanos", "#RH", "#Treinamento", "#Negocios",
+    "#Consultoria", "#Carreira", "#Empreendedorismo", "#PME", "#CulturaOrganizacional",
+    "#AltaPerformance", "#EmpresaFamiliar", "#Sucessao", "#Produtividade",
+    "#GestaoDeEquipes", "#GestaoDeResultados", "#ConfiancaNaLideranca", "#Financas",
+    "#Tecnologia", "#Lajeado", "#InteriorRS", "#RS",
+)
+
+# Termos banidos nesta conta (instrucao explicita do cliente) — nunca usar,
+# em nenhuma variacao de capitalizacao/acentuacao.
+HASHTAGS_PROIBIDAS = ("#coach", "#coaching")
 
 
 def _hora_para_horario(hora: str) -> str:
@@ -245,7 +270,7 @@ def _mock_batch(user_payload: dict) -> dict:
                     "Desliza pra entender onde esse vazamento costuma se esconder — e como eu "
                     "encontro esse número na prática.\n\n"
                     "👉 Salva este post pra revisar teu indicador de margem esta semana.\n\n"
-                    "#gestao #consultoriaempresarial #valedotaquari #lajeado #pme"
+                    "#DaleCarnegie #ValeDoTaquari #GestaoEmpresarial #Consultoria #PME #Lajeado"
                 ),
             },
             {
@@ -265,7 +290,7 @@ def _mock_batch(user_payload: dict) -> dict:
                     "você nunca ouviu falar dela. O interior gaúcho tem uma força empresarial "
                     "que raramente aparece no radar de fora.\n\n"
                     "👉 Marca um empresário da região nos comentários.\n\n"
-                    "#valedotaquari #lajeado #interiorgaucho #empreendedorismo #rs"
+                    "#DaleCarnegie #ValeDoTaquari #InteriorRS #Empreendedorismo #RS #CulturaOrganizacional"
                 ),
             },
         ],
