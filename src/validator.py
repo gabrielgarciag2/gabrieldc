@@ -17,6 +17,10 @@ Reprova uma peca (retorna motivo(s) de falha) se detectar:
        - Reel: roteiro com duracao_alvo_seg (15-45), gancho_visual, pelo
          menos 1 beat e direcao_cena completa (fundo/ambiente/
          enquadramento/velocidade_fala/expressao); legenda obrigatoria
+  5. Promessa de preco, desconto ou condicao comercial em conteudo publico
+     (ex: "20% de desconto", "por apenas R$ 497", "condicao especial",
+     "vagas com desconto") — regra inviolavel: preco/condicao e papel do
+     DIRECT/comercial, nunca do conteudo de topo de funil.
 
 Uso pelo orquestrador (run.py):
     ok, motivos = validate_peca(peca)
@@ -40,6 +44,22 @@ BLOCKLIST_PATH = BASE_DIR / "config" / "blocklist.txt"
 # R$ 300 mil / R$ 1.200.000 / R$ 3,5 milhoes / R$300mil ...
 MONEY_PATTERN = re.compile(
     r"R\$\s?[\d\.,]+\s?(milh(ão|ao|ões|oes)|mil)\b",
+    re.IGNORECASE,
+)
+
+# Promessa de preco/desconto/condicao comercial em conteudo publico —
+# regra inviolavel (ver Playbook / skill agente-marketing-gg secao 9.4):
+# nunca prometer preco, desconto ou condicao em conteudo publico. Nao
+# aplica a peca["fonte_publica"] == True (mesma excecao do MONEY_PATTERN),
+# ja que uma citacao de dado publico de mercado nao e uma promessa da marca.
+PRICE_PROMISE_PATTERN = re.compile(
+    r"\d+\s?%\s*(de\s+)?(desconto|off)"          # "20% de desconto", "20% off"
+    r"|desconto\s+de\s+\d+"                       # "desconto de 20"
+    r"|por\s+apenas\s+r\$"                        # "por apenas R$"
+    r"|(condi[cç][ãa]o|oferta)\s+especial"        # "condição especial" / "oferta especial"
+    r"|valor\s+promocional"
+    r"|pre[cç]o\s+especial"
+    r"|cupom\s+de\s+desconto",
     re.IGNORECASE,
 )
 
@@ -107,6 +127,20 @@ def _check_money_pattern(peca: dict) -> list:
             motivos.append(
                 f"Padrao monetario suspeito sem citacao de fonte publica: '{match.group(0)}' "
                 f"(contexto: '...{trecho}...')"
+            )
+    return motivos
+
+
+def _check_price_promise(peca: dict) -> list:
+    motivos = []
+    if peca.get("fonte_publica") is True:
+        return motivos
+    for texto in _all_text_fields(peca):
+        for match in PRICE_PROMISE_PATTERN.finditer(texto):
+            trecho = texto[max(0, match.start() - 60): match.end() + 30]
+            motivos.append(
+                f"Promessa de preco/desconto/condicao comercial em conteudo publico: "
+                f"'{match.group(0)}' (contexto: '...{trecho}...')"
             )
     return motivos
 
@@ -225,6 +259,7 @@ def validate_peca(peca: dict, blocklist: Optional[list] = None) -> tuple:
     blocklist = blocklist if blocklist is not None else _load_blocklist()
     motivos = []
     motivos += _check_money_pattern(peca)
+    motivos += _check_price_promise(peca)
     motivos += _check_blocklist(peca, blocklist)
     motivos += _check_campos_obrigatorios_e_limites(peca)
     return (len(motivos) == 0, motivos)

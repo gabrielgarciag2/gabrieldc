@@ -45,9 +45,11 @@ LEIS ABSOLUTAS (violação = falha crítica):
 2. NUNCA produza conteúdo motivacional genérico, promessa de enriquecimento, crítica nominal a pessoas, empresas ou entidades, opinião política/religiosa, ou qualquer afirmação factual sobre terceiros que você não possa sustentar.
 3. NUNCA invente estatísticas. Dados de mercado só com fonte pública verificável e sempre atribuída (ex: "segundo a Gallup..."); na dúvida, use formulação qualitativa.
 4. NUNCA invente citações atribuídas a clientes. Tom: direto, experiente, pé no chão de fábrica, português do RS ("nós"/"tu" — nunca "vocês", que soa de cima para baixo). Zero jargão de coach.
-5. Toda peça pertence a uma das 5 linhas: Mentoria com o Especialista, Framework Próprio, Dilema de Sócio, Liderança (Dale Carnegie), Tese Regional.
+5. Toda peça pertence a uma das 6 linhas editoriais oficiais (Planejamento Estratégico DC VTQ 2026–2029): Mentoria com o Especialista, Liderança na prática, Empresas familiares e sucessão, Comunicação que vende, Bastidores DC VTQ, Dados e tendências.
 6. CTAs rotativos com palavra-chave de DIRECT (DIAGNÓSTICO, MAPA, VAZAMENTO, EXPANSÃO) em no máximo 40% das peças; o restante encerra com pergunta de engajamento de baixo atrito ou instrução de salvar/compartilhar.
 7. Mix semanal de conteúdo (guia, não regra rígida): aproximadamente 2x insight/framework, 1x bastidor/mentoria, 1x enquete/pergunta e 1x dado com fonte, repetido a cada 7 peças.
+8. Notícia, tendência ou dado de terceiros usado como gancho de abertura é só ponto de partida — nunca copie estrutura, frase ou argumento de terceiros; desenvolva sempre uma tese própria a partir do gancho.
+9. Nunca prometa preço, desconto ou condição comercial em conteúdo público (isso é papel do DIRECT/comercial, não do conteúdo de topo de funil).
 
 ENTRADA: métricas da semana anterior (JSON do Metricool) + histórico de temas já publicados (não repetir tema em 45 dias).
 
@@ -65,7 +67,7 @@ ESTRATÉGIA DE HASHTAGS (rotativa — NUNCA repita o mesmo conjunto de hashtags 
 
 FORMATO E DIREÇÃO DE REEL (obrigatório para os slots listados em `slots_reel`): todo reel é um vídeo vertical (9:16) de 15 a 45 segundos, gravado por Gabriel falando direto pra câmera, sem edição complexa. Direção de cena padrão desta conta — use estes parâmetros em todo roteiro, ajustando pontualmente se o tema pedir: FUNDO neutro e levemente desfocado (escritório, sala de reunião ou parede lisa — nunca fundo genérico de banco de imagem, nunca ambiente que exponha marca/logo de terceiros); AMBIENTE com luz natural ou luz frontal suave (sem contraluz, sem sombra dura no rosto), som limpo, sem ruído de fundo perceptível; ENQUADRAMENTO plano médio (peito para cima), câmera na altura dos olhos, estática (handheld mínimo, sem tremedeira); VELOCIDADE DE FALA pausada e conversacional — nunca acelerada tipo "vendedor" —, com uma pausa de meio segundo depois do gancho e antes da virada/insight, para dar peso; EXPRESSÃO séria-cordial, olhando direto pra lente (não pro próprio rosto na tela), sobrancelha ativa nos pontos de ênfase, sem sorriso forçado — o tom é "conselheiro de confiança", não "influenciador animado". Cada roteiro deve ter: 1) gancho_visual — o que é dito e mostrado nos primeiros 2 segundos para travar o scroll, sempre com recorte local explícito (ex: "Se você lidera empresa aqui no Vale do Taquari...") ou uma afirmação de contraste que quebra expectativa; 2) beats — de 3 a 6 blocos, cada um com tempo aproximado, a fala exata (linha a linha, do jeito que Gabriel vai falar) e o texto_tela correspondente (curto, pensado para quem assiste sem áudio); 3) direção de cena específica daquele roteiro, pontuando qualquer ajuste ao padrão acima que o tema pedir (ex: tema mais sério pede expressão mais contida; dado/estatística pede pausa mais longa antes do número).
 
-AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-4. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
+AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-4, 8 e 9. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
 
 CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), sem acrescentar, remover ou renomear chaves. A resposta deve ser um único objeto JSON com esta forma exata:
 
@@ -76,7 +78,7 @@ CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), se
       "id": "<slug curto único, ex: 'ig-card1', 'ig-c1', 'ig-reel1'>",
       "canal": "instagram",
       "formato": "carrossel" | "card" | "reel",
-      "linha": "Mentoria com o Especialista" | "Framework Próprio" | "Dilema de Sócio" | "Liderança (Dale Carnegie)" | "Tese Regional",
+      "linha": "Mentoria com o Especialista" | "Liderança na prática" | "Empresas familiares e sucessão" | "Comunicação que vende" | "Bastidores DC VTQ" | "Dados e tendências",
       "publicar_em": "<um dos valores de datas_alvo_semana da entrada, formato YYYY-MM-DDTHH:MM:SS>",
       "racional": "<1 frase: por que este tema agora>",
 
@@ -315,7 +317,7 @@ def _mock_batch(user_payload: dict) -> dict:
                 "id": "ig-card1",
                 "canal": "instagram",
                 "formato": "card",
-                "linha": "Tese Regional",
+                "linha": "Dados e tendências",
                 "publicar_em": datas["segunda_19h00"],
                 "racional": (
                     "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
@@ -335,7 +337,7 @@ def _mock_batch(user_payload: dict) -> dict:
                 "id": "ig-reel1",
                 "canal": "instagram",
                 "formato": "reel",
-                "linha": "Dilema de Sócio",
+                "linha": "Empresas familiares e sucessão",
                 "publicar_em": datas["quarta_19h00"],
                 "racional": (
                     "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
