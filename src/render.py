@@ -52,7 +52,7 @@ CARD_ICON = BLACK_SOFT
 
 PHOTO_PATH = Path(__file__).resolve().parent.parent / "assets" / "gabriel-garcia.jpg"
 CARD_NAME = "Gabriel Garcia"
-CARD_ROLE_LINE1 = "Diretor Dale Carnegie Vale do Taquari"
+CARD_ROLE_LINE1 = "CEO Dale Carnegie Vale do Taquari"
 CARD_ROLE_LINE2 = "Master Trainer | Trainer Certificado"
 
 # Caminhos padrao das fontes DejaVu (presentes por default na maioria das

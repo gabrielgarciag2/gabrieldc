@@ -1,0 +1,201 @@
+{
+  "_nota": "Lote de 19 pecas novas para completar a cadencia de 2 posts/dia (08h e 19h, America/Sao_Paulo) em ambos os canais (instagram+linkedin no mesmo post do Metricool) entre 2026-07-20 e 2026-08-02, complementando os 9 posts ja existentes na fila. Fonte: Briefing_Conteudo_Dale_Carnegie_VTQ.docx (Blocos 1-5) + adaptacoes pontuais de temas de governanca, divida/caixa e IA/lideranca inspiradas em artigos externos (sem reproducao de texto de terceiros).",
+  "pecas": [
+    {
+      "id": "dado-gallup-0720pm",
+      "publicar_em": "2026-07-20T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Tese Regional",
+      "gancho": "70% da variação no engajamento de uma equipe",
+      "virada": "vem de uma única variável: o gestor direto. (Gallup)",
+      "texto": "Um dado que sempre reorienta a conversa quando discutimos plano de desenvolvimento de líderes: segundo a Gallup, cerca de 70% da variação no engajamento de uma equipe é explicada por uma única variável — o gestor direto.\n\nNão é o salário. Não é o benefício. Não é a missão bonita no mural. É a pessoa que a equipe encontra todos os dias.\n\nIsso muda onde investimos. Se o engajamento do time depende majoritariamente do gestor direto, é ali que o investimento em desenvolvimento precisa começar — não só no topo do organograma.\n\nNa tua empresa, quem forma os gestores diretos que formam o resto do time?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-templo-0721pm",
+      "publicar_em": "2026-07-21T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Confiança, respeito e credibilidade não são a base.",
+      "virada": "São o telhado. O alicerce é caráter e mentalidade.",
+      "texto": "Uma das imagens que mais uso em conselhos de sócios: o templo da influência.\n\nConfiança, respeito e credibilidade — o que todo gestor quer conquistar — são o telhado. Ficam de pé só se apoiados em algo mais profundo: caráter e mentalidade, o alicerce.\n\nO erro mais comum que vejo em promoções: promovemos pelo telhado (resultado, entrega, simpatia aparente) e esquecemos de olhar o alicerce. Aí a pessoa assume a cadeira de líder e o telhado desaba na primeira crise.\n\nAntes da próxima promoção na tua empresa, vale perguntar: essa pessoa tem alicerce, ou só aparenta ter telhado?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "bastidor-0722pm",
+      "publicar_em": "2026-07-22T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Dilema de Sócio",
+      "gancho": "Essa semana estive em duas mesas de sócio diferentes.",
+      "virada": "Mesmo problema, empresas completamente diferentes.",
+      "texto": "Bastidor rápido: essa semana estive em duas mesas de sócio diferentes, setores completamente diferentes, portes diferentes.\n\nO problema que apareceu nas duas: a empresa cresceu mais rápido que a capacidade de liderança do time. Faturamento subiu, estrutura de gente ficou para trás.\n\nÉ um padrão que vejo com uma frequência que já deixou de ser coincidência aqui no Vale do Taquari — crescimento de receita descolado de investimento em desenvolvimento de pessoas.\n\nSe isso te soa familiar, não estás sozinho. Comenta aqui ou me manda mensagem — vale trocar uma ideia sobre isso.\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-3fontes-0723pm",
+      "publicar_em": "2026-07-23T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Dinheiro compra esforço. Cargo compra obediência.",
+      "virada": "Só a personalidade conquista comprometimento — e sobrevive sem supervisão.",
+      "texto": "Existem três fontes de poder dentro de uma empresa. Dinheiro compra esforço. Cargo compra obediência. Personalidade — no sentido de caráter, referência, exemplo — conquista comprometimento.\n\nA diferença aparece exatamente quando ninguém está olhando. Esforço e obediência precisam de supervisão para existir. Comprometimento não.\n\nQuando o teu melhor profissional recebe uma proposta 15% maior de outra empresa, o que segura ele: o salário, o cargo, ou a liderança que ele tem por perto?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "enquete-telhado-0725pm",
+      "publicar_em": "2026-07-25T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Sua empresa promove pelo telhado",
+      "virada": "ou pelo alicerce?",
+      "texto": "Pergunta direta pra essa sexta: sua empresa promove pelo telhado ou pelo alicerce?\n\nTelhado é resultado visível, entrega, simpatia. Alicerce é caráter e mentalidade — o que sustenta a pessoa quando a pressão aumenta.\n\nNão tem resposta errada, mas tem resposta honesta. E ela diz muito sobre quem vai estar na liderança da tua empresa daqui a dois anos.\n\nComenta aqui: telhado ou alicerce?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-piramide-0726am",
+      "publicar_em": "2026-07-26T08:00:00",
+      "canal": "instagram",
+      "formato": "carrossel",
+      "linha": "Liderança (Dale Carnegie)",
+      "slides": [
+        {"tipo": "capa", "kicker": "GESTÃO DE PESSOAS (DALE CARNEGIE)", "titulo": "Por que promovemos o melhor técnico e formamos o pior gestor", "subtitulo": "A pirâmide que expõe esse erro"},
+        {"tipo": "conteudo", "numero": "1", "titulo": "A pirâmide de Chiavenato", "corpo": "Toda função exige três tipos de habilidade em proporções diferentes: técnica, humana e conceitual. Quanto mais alto o cargo, menos técnica e mais humana e conceitual ele exige."},
+        {"tipo": "conteudo", "numero": "2", "titulo": "O erro mais comum em PME", "corpo": "Promovemos pelo desempenho no nível anterior — o melhor vendedor vira gerente de vendas, o melhor técnico vira supervisor. A habilidade que fez essa pessoa brilhar lá embaixo não é a que o novo cargo cobra."},
+        {"tipo": "conteudo", "numero": "3", "titulo": "O que o Google descobriu", "corpo": "O Project Oxygen, do Google, analisou os traços dos melhores gestores da empresa. Competência técnica ficou em último lugar entre os fatores que definiam um bom líder."},
+        {"tipo": "conteudo", "numero": "4", "titulo": "O que isso muda na prática", "corpo": "Antes de promover, pergunte: essa pessoa já demonstrou habilidade humana e conceitual, ou só entrega técnica? Se só entrega técnica, ela precisa de desenvolvimento antes do cargo — não depois."},
+        {"tipo": "cta", "titulo": "E na tua empresa?", "corpo": "Comenta aqui: o melhor técnico do teu time já foi promovido só por ser o melhor técnico?"}
+      ],
+      "texto": "Por que promovemos o melhor técnico e formamos, sem querer, o pior gestor?\n\nA resposta está na pirâmide de Chiavenato: toda função pede habilidade técnica, humana e conceitual em proporções diferentes — e quanto mais alto o cargo, menos técnica e mais humana ele exige.\n\nO erro mais comum: promovemos pelo desempenho técnico do nível anterior, não pela capacidade de liderar gente. E o Google Project Oxygen confirma — competência técnica ficou em último lugar entre os traços dos melhores gestores da empresa.\n\nDesliza pra entender como isso muda a forma de decidir a próxima promoção.\n\nO melhor técnico do teu time já foi promovido só por ser o melhor técnico?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "dado-institucional-0726pm",
+      "publicar_em": "2026-07-26T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Tese Regional",
+      "gancho": "Mais de 100 anos de história.",
+      "virada": "90 países, 50 escritórios no Brasil, 25 anos aqui no Vale do Taquari.",
+      "texto": "Um número que gosto de compartilhar de tempos em tempos, porque contextualiza o trabalho: a Dale Carnegie tem mais de 100 anos de história, presença em cerca de 90 países e treinamentos em mais de 35 idiomas. No Brasil, são 50 escritórios.\n\nAqui no Vale do Taquari, são mais de 25 anos de atuação e mais de 4.000 profissionais já formados na região.\n\nNão é currículo — é contexto. Método que atravessa um século e continua relevante não é modismo, é fundamento testado.\n\nSe você já passou por algum treinamento nosso na região, comenta aqui — quero saber o que ficou.\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-ordem-0727am",
+      "publicar_em": "2026-07-27T08:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Confiança. Depois cooperação. Depois mudança.",
+      "virada": "Pular essa ordem é a causa nº1 de projeto de mudança que fracassa.",
+      "texto": "A ordem importa mais do que a maioria dos planos de mudança considera: confiança → cooperação → mudança.\n\nNão dá para pedir cooperação de quem não confia em você. E não dá para implementar mudança real sem cooperação genuína — só obediência temporária, que desaparece assim que a supervisão relaxa.\n\nA causa número 1 de projeto de mudança que fracassa em PME não é resistência da equipe. É pular direto para a mudança sem construir confiança e cooperação antes.\n\nO último projeto de mudança que não vingou na tua empresa — em que degrau ele pulou?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "enquete-confianca-0727pm",
+      "publicar_em": "2026-07-27T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Reunião nova, sistema novo, meta nova.",
+      "virada": "Quantas mudanças sua empresa tenta empurrar sem antes cuidar da confiança?",
+      "texto": "Pergunta pra pensar hoje à noite: quantas mudanças sua empresa tentou empurrar este ano — reunião nova, sistema novo, meta nova — sem antes cuidar da confiança da equipe?\n\nConfiança não se decreta em comunicado. Se constrói em pequenas entregas cumpridas, uma atrás da outra.\n\nSem esse alicerce, toda mudança nova vira só mais uma iniciativa que a equipe aguenta até passar.\n\nComenta: qual dessas mudanças ainda não pegou na tua empresa?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-nadella-0728pm",
+      "publicar_em": "2026-07-28T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Framework Próprio",
+      "gancho": "Satya Nadella assumiu uma Microsoft do 'sabe-tudo'.",
+      "virada": "Ele mudou a mentalidade pra 'aprende-tudo' — e o valor de mercado multiplicou por 10.",
+      "texto": "Um dos casos que mais uso pra ilustrar o poder de mudar mentalidade antes de cobrar resultado: Satya Nadella, ao assumir a Microsoft, herdou uma cultura de 'sabe-tudo' — cada área defendendo seu próprio território, competindo internamente mais do que com o mercado.\n\nA virada não começou com uma nova estratégia de produto. Começou com uma mudança de mentalidade: de 'sabe-tudo' para 'aprende-tudo'. Curiosidade e colaboração no lugar de defesa de território.\n\nO resultado, numa década: valor de mercado multiplicado por 10.\n\nMentalidade não é o 'soft' da gestão. É o que determina se a estratégia certa vai vingar ou morrer na cultura.\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-cargomentalidade-0729am",
+      "publicar_em": "2026-07-29T08:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Cargo se dá com assinatura.",
+      "virada": "Mentalidade se constrói com processo.",
+      "texto": "A frase que mais fica anotada quando falo sobre isso em palestra: cargo se dá com assinatura; mentalidade se constrói com processo.\n\nUm contrato social muda o cargo de alguém da noite para o dia. Nenhum contrato muda a forma como essa pessoa pensa, decide e trata gente — isso é processo, é desenvolvimento contínuo, é tempo.\n\nA diferença entre um chefe e um líder normalmente não está no cargo. Está em quanto processo de desenvolvimento essa pessoa já passou.\n\nNa tua empresa, quantas pessoas têm cargo de líder mas ainda estão devendo o processo?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "governanca-papeis-0729pm",
+      "publicar_em": "2026-07-29T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Dilema de Sócio",
+      "gancho": "Sócio e gestor não são a mesma cadeira.",
+      "virada": "Confundir os dois papéis é uma das causas mais comuns de trava em empresa familiar.",
+      "texto": "Um padrão recorrente nas mesas de sócio que participo: confundir o papel de sócio com o papel de gestor.\n\nSócio pensa em capital, risco e retorno de longo prazo. Gestor pensa em operação, prazo e resultado do mês. São lentes diferentes — e quando a mesma pessoa usa as duas ao mesmo tempo, sem clareza de qual está usando em cada decisão, a empresa trava: decisão estratégica é discutida com critério operacional, e decisão operacional emperra esperando aval estratégico que nem precisava.\n\nSeparar esses papéis — mesmo informalmente, mesmo numa empresa pequena — costuma destravar mais decisão do que qualquer ferramenta de gestão.\n\nNa tua empresa, as decisões de sócio e as decisões de gestor passam pela mesma reunião, no mesmo tom?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-metacomportamental-0730am",
+      "publicar_em": "2026-07-30T08:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Não existe meta empresarial",
+      "virada": "que não seja uma meta comportamental.",
+      "texto": "Uma provocação que uso bastante em planejamento estratégico: não existe meta empresarial que não seja, no fundo, uma meta comportamental.\n\nTeste simples: pega qualquer meta de 2026 da tua empresa e pergunta — ela se resolve sem que alguém mude de comportamento? Vender mais exige abordagem diferente. Reduzir custo exige decisão diferente no dia a dia. Melhorar entrega exige rotina diferente na operação.\n\nSe a meta não vem acompanhada de um plano de mudança de comportamento das pessoas que vão executá-la, ela é só um número na parede.\n\nQual meta da tua empresa esse ano ainda não tem um plano de mudança de comportamento por trás?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "divida-caixa-0730pm",
+      "publicar_em": "2026-07-30T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Framework Próprio",
+      "gancho": "Nem toda dívida é ruim.",
+      "virada": "Mas toda dívida usada pra mascarar problema operacional é.",
+      "texto": "Vale a mesma lógica que se usa para dívida de empresa quando se fala de dívida de caixa em PME: existe a dívida que financia crescimento planejado, com retorno maior que o custo — e existe a dívida que só está tampando um buraco operacional que ninguém quis olhar de frente.\n\nA primeira é ferramenta. A segunda é sintoma. E o problema de usar dívida pra tampar sintoma é que ele volta — só que maior, e com juros.\n\nAntes de renovar o próximo empréstimo, vale perguntar: essa dívida está financiando crescimento, ou está adiando um diagnóstico que a empresa precisa fazer?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-kpi-0731pm",
+      "publicar_em": "2026-07-31T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Sem KPI, treinamento é evento.",
+      "virada": "Com KPI, é investimento.",
+      "texto": "Uma crítica que faço ao meu próprio setor, sem meias palavras: durante anos, treinamento vendeu motivação que evaporava em duas semanas. Muita gente saiu de palestra emocionada e voltou pro mesmo comportamento na segunda-feira seguinte.\n\nO que separa treinamento que gera resultado de treinamento que só gera boa lembrança é simples de enunciar e difícil de fazer: indicador. Como Deming já dizia, o que não pode ser medido não pode ser gerenciado.\n\nSem KPI, treinamento é evento — todo mundo gosta, ninguém mede o efeito. Com KPI, é investimento — e investimento se cobra.\n\nO último treinamento que a tua empresa contratou tinha um indicador de resultado definido antes de começar?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-vitamina-0801am",
+      "publicar_em": "2026-08-01T08:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Treinamento não é remédio.",
+      "virada": "É vitamina.",
+      "texto": "Uma diferença que muda a forma de pensar desenvolvimento de gente: treinamento não é remédio, é vitamina.\n\nRemédio a gente só toma quando já dói — quando o time já perdeu um cliente, já teve o conflito feio, já viu o melhor profissional pedir demissão. Vitamina a gente toma antes, para nunca precisar do remédio.\n\nAs empresas que mais se destacam aqui na região não esperam quebrar para desenvolver gente. Elas tratam desenvolvimento como rotina, não como socorro.\n\nNa tua empresa, o investimento em pessoas costuma vir antes ou depois do problema aparecer?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "enquete-desenvolvimento-0801pm",
+      "publicar_em": "2026-08-01T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Liderança (Dale Carnegie)",
+      "gancho": "Quantas vezes esse mês",
+      "virada": "sua empresa treinou a equipe antes de precisar 'consertar' alguém?",
+      "texto": "Pergunta simples pra fechar o fim de semana: quantas vezes esse mês sua empresa investiu em desenvolver a equipe antes de precisar 'consertar' algum comportamento?\n\nSe a resposta foi zero, vale reparar — normalmente o mês seguinte é quando aparece a conta: retrabalho, conflito ou alguém bom pedindo pra sair.\n\nDesenvolvimento não é sobre motivar, é sobre prevenir.\n\nComenta aqui: quantas ações de desenvolvimento sua empresa teve nas últimas 4 semanas?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "insight-ia-lideranca-0802am",
+      "publicar_em": "2026-08-02T08:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Tese Regional",
+      "gancho": "IA já escreve, resume e decide rápido.",
+      "virada": "O que ela não faz é construir confiança — isso ainda é trabalho humano.",
+      "texto": "Tenho acompanhado com atenção o debate sobre inteligência artificial e liderança — inclusive discussões recentes de pensadores como Yuval Harari sobre como a IA está mudando linguagem, burocracia e poder de decisão nas organizações.\n\nUm ponto me parece central pra quem lidera PME: quanto mais rápido a tecnologia processa informação, mais valiosa fica a habilidade que ela não processa — construir confiança entre pessoas.\n\nIsso reforça, e não substitui, o que já vimos no Google Project Oxygen: competência técnica não é o que separa um bom líder de um líder mediano. IA cuida cada vez melhor da parte técnica. A parte humana continua sendo trabalho humano.\n\nCom mais tecnologia disponível, sua empresa está investindo mais ou menos em desenvolvimento de gente?\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    },
+    {
+      "id": "dado-livro-0802pm",
+      "publicar_em": "2026-08-02T19:00:00",
+      "canal": "instagram",
+      "formato": "card",
+      "linha": "Tese Regional",
+      "gancho": "Mais de 50 milhões de exemplares vendidos",
+      "virada": "e os princípios continuam os mesmos há quase 90 anos.",
+      "texto": "Um dado que gosto de lembrar quando alguém pergunta se esse tipo de conteúdo 'ainda funciona': o livro 'Como Fazer Amigos e Influenciar Pessoas', de Dale Carnegie, já vendeu mais de 50 milhões de exemplares no mundo — e os princípios continuam praticamente os mesmos de quase 90 anos atrás.\n\nRelação humana não tem versão nova a cada ano. O que muda é o contexto — hoje é WhatsApp e reunião online, antes era carta e telefone fixo — mas o fundamento de como conquistar confiança e influenciar sem manipular continua o mesmo.\n\nMétodo que atravessa décadas sem precisar de reinvenção normalmente não é modismo — é fundamento.\n\nJá leste esse livro? Comenta aqui o que mais ficou.\n\n#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas"
+    }
+  ]
+}
