@@ -51,16 +51,19 @@ LEIS ABSOLUTAS (violação = falha crítica):
 
 ENTRADA: métricas da semana anterior (JSON do Metricool) + histórico de temas já publicados (não repetir tema em 45 dias).
 
-CADÊNCIA E PUBLICAÇÃO (padrão atual, otimizado por dados de desempenho do Metricool): 2 peças por dia, todos os dias da semana (segunda a domingo) — 14 peças por semana — publicadas em 11h30 e 19h00 (America/Sao_Paulo). Esses dois horários foram escolhidos porque concentram o pico de engajamento tanto no Instagram (pico ~11h-12h e ~19h-20h) quanto no LinkedIn (pico acentuado às 11h, muito acima de qualquer horário da manhã cedo). Cada peça é publicada SIMULTANEAMENTE em Instagram e LinkedIn, como um único post multi-rede (mesma imagem, mesmo texto) — não crie peças LinkedIn-only ou Instagram-only separadas.
+CADÊNCIA E PUBLICAÇÃO (padrão atual, otimizado por dados de desempenho do Metricool): 2 peças por dia, todos os dias da semana (segunda a domingo) — 14 peças por semana — publicadas em 11h30 e 19h00 (America/Sao_Paulo). Esses dois horários foram escolhidos porque concentram o pico de engajamento tanto no Instagram (pico ~11h-12h e ~19h-20h) quanto no LinkedIn (pico acentuado às 11h, muito acima de qualquer horário da manhã cedo). Cada peça é publicada SIMULTANEAMENTE em Instagram e LinkedIn, como um único post multi-rede (mesma imagem/vídeo, mesmo texto) — não crie peças LinkedIn-only ou Instagram-only separadas. A entrada traz também o campo `slots_reel`: lista de 3 a 5 chaves de `datas_alvo_semana` que DEVEM ser produzidas no formato "reel" nesta semana — é o formato que carrega alcance para fora da base de seguidores no Instagram, então esses slots são obrigatórios, não opcionais.
 
 SAÍDA: JSON estrito com o lote da semana:
-- 14 peças (2 por dia, um slot 11h30 e um slot 19h00), cada uma no formato "card" (frase de impacto em duas partes) OU "carrossel" (6-8 slides).
+- 14 peças (2 por dia, um slot 11h30 e um slot 19h00), cada uma no formato "card" (frase de impacto em duas partes), "carrossel" (6-8 slides) OU "reel" (vídeo vertical roteirizado) — os slots listados em `slots_reel` da entrada são SEMPRE "reel"; os demais ficam a seu critério entre card e carrossel.
 - Card: "gancho" (contexto/problema, ≤ 90 caracteres, tom neutro) + "virada" (conclusão/insight que fecha o raciocínio, ≤ 90 caracteres).
 - Carrossel: 6-8 slides, com kicker, titulo, corpo por slide (títulos ≤ 60 caracteres, corpo ≤ 220 caracteres), incluindo 1 capa + 1 cta.
-- Todo card e todo carrossel leva também um campo "legenda" de 900-1400 caracteres com gancho forte na 1ª linha e um bloco de hashtags no final, seguindo a ESTRATÉGIA DE HASHTAGS abaixo — esse texto serve tanto de legenda do Instagram quanto de corpo do post do LinkedIn.
+- Reel: vídeo vertical roteirizado (9:16), 15-45s, campo "roteiro" com gancho visual dos 2 primeiros segundos, beats (fala linha a linha + texto de tela) e direção de cena (fundo, ambiente, enquadramento, velocidade de fala, expressão) — ver FORMATO E DIREÇÃO DE REEL abaixo.
+- Toda peça (carrossel, card ou reel) leva também um campo "legenda" de 900-1400 caracteres com gancho forte na 1ª linha e um bloco de hashtags no final, seguindo a ESTRATÉGIA DE HASHTAGS abaixo — esse texto serve tanto de legenda do Instagram quanto de corpo do post do LinkedIn.
 - Para cada peça: linha editorial, data/hora, e campo racional (1 frase: por que este tema agora, com base nas métricas ou no mix semanal).
 
 ESTRATÉGIA DE HASHTAGS (rotativa — NUNCA repita o mesmo conjunto de hashtags em peças consecutivas nem no mesmo dia; o conjunto fixo repetido reduz alcance/descoberta no Instagram): use de 6 a 8 hashtags por peça, sendo 2 fixas de marca — #DaleCarnegie #ValeDoTaquari — mais 4 a 6 escolhidas variando a cada peça, com base no tema específico daquela peça, dentre este pool: #Lideranca #GestaoDePessoas #DesenvolvimentoDeLideres #Mentoria #GestaoEmpresarial #RecursosHumanos #RH #Treinamento #Negocios #Consultoria #Carreira #Empreendedorismo #PME #CulturaOrganizacional #AltaPerformance #EmpresaFamiliar #Sucessao #Produtividade #GestaoDeEquipes #GestaoDeResultados #ConfiancaNaLideranca #Financas #Tecnologia #Lajeado #InteriorRS #RS. Exemplo: peça sobre sucessão familiar usa #EmpresaFamiliar #Sucessao; peça sobre indicadores usa #GestaoDeResultados #Produtividade; peça de bastidor local usa #Lajeado #InteriorRS. PROIBIDO usar #coach, #coaching ou qualquer variação — termo banido nesta conta, mesmo que apareça em pesquisas de hashtags populares do nicho.
+
+FORMATO E DIREÇÃO DE REEL (obrigatório para os slots listados em `slots_reel`): todo reel é um vídeo vertical (9:16) de 15 a 45 segundos, gravado por Gabriel falando direto pra câmera, sem edição complexa. Direção de cena padrão desta conta — use estes parâmetros em todo roteiro, ajustando pontualmente se o tema pedir: FUNDO neutro e levemente desfocado (escritório, sala de reunião ou parede lisa — nunca fundo genérico de banco de imagem, nunca ambiente que exponha marca/logo de terceiros); AMBIENTE com luz natural ou luz frontal suave (sem contraluz, sem sombra dura no rosto), som limpo, sem ruído de fundo perceptível; ENQUADRAMENTO plano médio (peito para cima), câmera na altura dos olhos, estática (handheld mínimo, sem tremedeira); VELOCIDADE DE FALA pausada e conversacional — nunca acelerada tipo "vendedor" —, com uma pausa de meio segundo depois do gancho e antes da virada/insight, para dar peso; EXPRESSÃO séria-cordial, olhando direto pra lente (não pro próprio rosto na tela), sobrancelha ativa nos pontos de ênfase, sem sorriso forçado — o tom é "conselheiro de confiança", não "influenciador animado". Cada roteiro deve ter: 1) gancho_visual — o que é dito e mostrado nos primeiros 2 segundos para travar o scroll, sempre com recorte local explícito (ex: "Se você lidera empresa aqui no Vale do Taquari...") ou uma afirmação de contraste que quebra expectativa; 2) beats — de 3 a 6 blocos, cada um com tempo aproximado, a fala exata (linha a linha, do jeito que Gabriel vai falar) e o texto_tela correspondente (curto, pensado para quem assiste sem áudio); 3) direção de cena específica daquele roteiro, pontuando qualquer ajuste ao padrão acima que o tema pedir (ex: tema mais sério pede expressão mais contida; dado/estatística pede pausa mais longa antes do número).
 
 AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-4. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
 
@@ -70,9 +73,9 @@ CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), se
   "semana": "<data da segunda-feira alvo, YYYY-MM-DD, igual ao campo 'semana' da entrada>",
   "pecas": [
     {
-      "id": "<slug curto único, ex: 'ig-card1', 'ig-c1'>",
+      "id": "<slug curto único, ex: 'ig-card1', 'ig-c1', 'ig-reel1'>",
       "canal": "instagram",
-      "formato": "carrossel" | "card",
+      "formato": "carrossel" | "card" | "reel",
       "linha": "Mentoria com o Especialista" | "Framework Próprio" | "Dilema de Sócio" | "Liderança (Dale Carnegie)" | "Tese Regional",
       "publicar_em": "<um dos valores de datas_alvo_semana da entrada, formato YYYY-MM-DDTHH:MM:SS>",
       "racional": "<1 frase: por que este tema agora>",
@@ -89,7 +92,23 @@ CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), se
       "gancho": "<=90 caracteres, frase de contexto/problema (1a parte, tom neutro)",
       "virada": "<=90 caracteres, frase de conclusao/insight (2a parte, o giro do pensamento)",
 
-      // presente em TODA peca (carrossel ou card) — legenda/corpo unico usado nos dois canais:
+      // presente SOMENTE se formato=reel — ver FORMATO E DIREÇÃO DE REEL acima:
+      "roteiro": {
+        "duracao_alvo_seg": "<numero entre 15 e 45>",
+        "gancho_visual": "<fala + o que aparece na tela nos 0-2s, ja com recorte local>",
+        "beats": [
+          {"tempo": "<ex: 0-3s>", "fala": "<linha exata a ser dita>", "texto_tela": "<texto curto pra quem assiste sem audio>"}
+        ],
+        "direcao_cena": {
+          "fundo": "<descricao do fundo/cenario>",
+          "ambiente": "<luz e som>",
+          "enquadramento": "<plano e altura de camera, sempre 9:16>",
+          "velocidade_fala": "<ritmo e onde pausar>",
+          "expressao": "<expressao facial/corporal predominante>"
+        }
+      },
+
+      // presente em TODA peca (carrossel, card ou reel) — legenda/corpo unico usado nos dois canais:
       "legenda": "<900-1400 caracteres, com hashtags-base>"
     }
   ]
@@ -98,8 +117,9 @@ CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), se
 Regras adicionais do contrato:
 - O esquema acima é apenas ilustrativo: os comentários iniciados por "//" e os placeholders entre "<>" ou com "|" NÃO devem aparecer no seu JSON de saída — são apenas explicações de formato.
 - Exatamente 14 peças no total, cobrindo todos os slots de datas_alvo_semana da entrada (2 por dia, 7 dias).
-- "canal" é sempre "instagram" (a peça é publicada em ambos os canais a partir do mesmo conteúdo/imagem — não crie peças com canal="linkedin").
-- Todo carrossel e todo card devem ter campo "legenda" com hashtags seguindo a ESTRATÉGIA DE HASHTAGS (rotativas por tema, nunca o mesmo conjunto repetido em peças consecutivas, nunca #coach/#coaching).
+- "canal" é sempre "instagram" (a peça é publicada em ambos os canais a partir do mesmo conteúdo/imagem ou vídeo — não crie peças com canal="linkedin").
+- Toda peça (carrossel, card ou reel) deve ter campo "legenda" com hashtags seguindo a ESTRATÉGIA DE HASHTAGS (rotativas por tema, nunca o mesmo conjunto repetido em peças consecutivas, nunca #coach/#coaching).
+- Todo slot listado em `slots_reel` da entrada deve ser produzido com "formato": "reel" e campo "roteiro" completo (não use reel fora desses slots, nem deixe de usar reel nos slots listados).
 - Nunca omita "pecas" nem devolva lista vazia — isso é tratado como falha total do lote.
 - Sua resposta inteira deve ser um único objeto JSON válido (RFC 8259), sem comentários, sem texto antes/depois, sem cercas de código ```."""
 
@@ -145,6 +165,19 @@ HASHTAGS_POOL_ROTATIVO = (
 # em nenhuma variacao de capitalizacao/acentuacao.
 HASHTAGS_PROIBIDAS = ("#coach", "#coaching")
 
+# ============================================================================
+# REELS — slots semanais que DEVEM ser produzidos no formato "reel" (ver secao
+# "FORMATO E DIREÇÃO DE REEL" do SYSTEM_PROMPT). Decisao do cliente (jul/2026):
+# Reels sao o unico alavancador organico real de alcance fora da base de
+# seguidores (sem ads, sem colab com contas irmas Dale Carnegie), entao viram
+# obrigatorios nesses slots, nao opcionais. 4 reels/semana, dentro da faixa de
+# 3 a 5 combinada com o cliente. Requer gravacao manual (Gabriel fala pra
+# camera) — o pipeline de render.py/publisher.py so gera imagem automatica pra
+# card/carrossel; peca "reel" fica com media pendente ate o video ser gravado
+# e o arquivo anexado manualmente antes da publicacao.
+# ============================================================================
+REEL_SLOTS_PADRAO = ("segunda_19h00", "quarta_19h00", "sexta_19h00", "sabado_11h30")
+
 
 def _hora_para_horario(hora: str) -> str:
     """Converte um slot tipo '11h30' ou '19h00' (ou o formato legado '08h')
@@ -172,7 +205,9 @@ def _build_user_payload(metrics: dict, temas_recentes: list, hoje: datetime = No
     14 slots (2 por dia, todos os 7 dias da semana, 11h30/19h00 America/Sao_Paulo,
     horarios com melhor desempenho medido via getBestTimeToPostByNetwork) —
     padrao de cadencia atual (ver SYSTEM_PROMPT). Chaves no formato
-    '<dia>_<hora>', ex: 'segunda_11h30', 'segunda_19h00', ..., 'domingo_19h00'."""
+    '<dia>_<hora>', ex: 'segunda_11h30', 'segunda_19h00', ..., 'domingo_19h00'.
+    Tambem inclui 'slots_reel', a lista de slots (subconjunto de
+    REEL_SLOTS_PADRAO) que devem obrigatoriamente virar peca formato=reel."""
     hoje = hoje or datetime.now()
     datas = _proximas_datas_uteis(hoje)
     nomes = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"]
@@ -180,10 +215,12 @@ def _build_user_payload(metrics: dict, temas_recentes: list, hoje: datetime = No
     for nome in nomes:
         for hora in HORARIOS_PICO:
             datas_alvo_semana[f"{nome}_{hora}"] = f"{datas[nome]}T{_hora_para_horario(hora)}"
+    slots_reel = [s for s in REEL_SLOTS_PADRAO if s in datas_alvo_semana]
     return {
         "metricas_semana_anterior": metrics,
         "temas_ultimos_45_dias": temas_recentes,
         "datas_alvo_semana": datas_alvo_semana,
+        "slots_reel": slots_reel,
         "semana": datas["segunda"],
     }
 
@@ -191,10 +228,11 @@ def _build_user_payload(metrics: dict, temas_recentes: list, hoje: datetime = No
 def _mock_batch(user_payload: dict) -> dict:
     """Lote de exemplo gerado localmente, sem chamada de rede, usado
     quando ANTHROPIC_API_KEY nao esta configurada (modo mock). Cobre os
-    2 formatos do contrato atual (instagram/carrossel e instagram/card,
-    ambos publicados em duplo-canal) para permitir teste completo de
-    renderizacao/validacao/dry-run. Nao preenche as 14 peças da semana —
-    apenas 2 peças de exemplo, o suficiente para exercitar o pipeline."""
+    3 formatos do contrato atual (instagram/carrossel, instagram/card e
+    instagram/reel, todos publicados em duplo-canal) para permitir teste
+    completo de renderizacao/validacao/dry-run. Nao preenche as 14 peças da
+    semana — apenas 3 peças de exemplo, o suficiente para exercitar o
+    pipeline (a peça reel fica com media pendente ate gravacao manual)."""
     datas = user_payload["datas_alvo_semana"]
     semana = user_payload["semana"]
     logger.warning(
@@ -291,6 +329,85 @@ def _mock_batch(user_payload: dict) -> dict:
                     "que raramente aparece no radar de fora.\n\n"
                     "👉 Marca um empresário da região nos comentários.\n\n"
                     "#DaleCarnegie #ValeDoTaquari #InteriorRS #Empreendedorismo #RS #CulturaOrganizacional"
+                ),
+            },
+            {
+                "id": "ig-reel1",
+                "canal": "instagram",
+                "formato": "reel",
+                "linha": "Dilema de Sócio",
+                "publicar_em": datas["quarta_19h00"],
+                "racional": (
+                    "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
+                    "reel, obrigatorio nos slots de slots_reel, para teste de dry-run."
+                ),
+                "roteiro": {
+                    "duracao_alvo_seg": 28,
+                    "gancho_visual": (
+                        "Se você lidera uma empresa aqui no Vale do Taquari, essa pergunta "
+                        "vai incomodar."
+                    ),
+                    "beats": [
+                        {
+                            "tempo": "0-3s",
+                            "fala": "Se você lidera uma empresa aqui no Vale do Taquari, essa pergunta vai incomodar.",
+                            "texto_tela": "UMA PERGUNTA QUE INCOMODA",
+                        },
+                        {
+                            "tempo": "3-10s",
+                            "fala": "Quantas decisões importantes essa semana passaram pela tua mesa só porque ninguém mais tinha autonomia pra decidir?",
+                            "texto_tela": "Quantas decisões só passaram por você?",
+                        },
+                        {
+                            "tempo": "10-18s",
+                            "fala": "Esse é o padrão mais comum que eu vejo em conselho de sócio: a empresa cresceu, mas a liderança não foi desenvolvida junto.",
+                            "texto_tela": "Empresa cresce. Liderança não acompanha.",
+                        },
+                        {
+                            "tempo": "18-25s",
+                            "fala": "O time capaz de decidir sem te consultar toda hora não nasce pronto — ele é formado.",
+                            "texto_tela": "Time que decide sozinho é FORMADO, não nasce pronto",
+                        },
+                        {
+                            "tempo": "25-28s",
+                            "fala": "Comenta aqui: quantas dessas decisões foram tuas essa semana?",
+                            "texto_tela": "Comenta 👇 quantas foram tuas essa semana",
+                        },
+                    ],
+                    "direcao_cena": {
+                        "fundo": (
+                            "Escritório neutro, estante ou parede lisa desfocada ao fundo, "
+                            "sem logotipos de terceiros visíveis."
+                        ),
+                        "ambiente": (
+                            "Luz natural de janela lateral suave ou luz frontal suave, sem "
+                            "contraluz; ambiente silencioso, sem ruído de fundo perceptível."
+                        ),
+                        "enquadramento": (
+                            "Vertical 9:16, plano médio (peito para cima), câmera na altura "
+                            "dos olhos, estática."
+                        ),
+                        "velocidade_fala": (
+                            "Pausada; meio segundo de pausa depois do gancho (0-3s) e antes "
+                            "da virada em 'formado, não nasce pronto'."
+                        ),
+                        "expressao": (
+                            "Séria-cordial, olhar direto pra lente, sobrancelha ativa na "
+                            "pergunta de gancho e no CTA final."
+                        ),
+                    },
+                },
+                "legenda": (
+                    "Quantas decisões importantes passaram pela tua mesa essa semana só "
+                    "porque ninguém mais tinha autonomia pra decidir?\n\n"
+                    "É o padrão mais comum que vejo em conselho de sócio: a empresa cresce, "
+                    "mas a liderança não é desenvolvida no mesmo ritmo — e o dono vira "
+                    "gargalo de toda decisão.\n\n"
+                    "Time que decide sem te consultar toda hora não nasce pronto. Ele é "
+                    "formado.\n\n"
+                    "👉 Comenta aqui: quantas dessas decisões foram tuas essa semana?\n\n"
+                    "#DaleCarnegie #ValeDoTaquari #Lideranca #GestaoDePessoas "
+                    "#DesenvolvimentoDeLideres #EmpresaFamiliar"
                 ),
             },
         ],
