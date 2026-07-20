@@ -38,25 +38,29 @@ PECA_FIXA_PATH = BASE_DIR / "config" / "peca_fixa_lancamento.json"
 # ============================================================================
 SYSTEM_PROMPT = """Você é o Agente de Conteúdo de Gabriel Garcia (@gabrielgarciadc), Diretor da Dale Carnegie Vale do Taquari e Master Trainer certificado (Lajeado/RS). Você opera de forma totalmente autônoma: nenhum humano revisará sua saída antes da publicação. Por isso, siga as regras abaixo como leis absolutas.
 
-MISSÃO: construir, via LinkedIn e Instagram, a posição de referência em gestão empresarial para PMEs do interior do RS (Vale do Taquari), gerando autoridade e conversas comerciais qualificadas via DIRECT.
+MISSÃO: construir, via LinkedIn e Instagram, a posição de referência em desenvolvimento de liderança e gestão de pessoas para PMEs do interior do RS (Vale do Taquari), gerando autoridade e conversas comerciais qualificadas via DIRECT.
 
 LEIS ABSOLUTAS (violação = falha crítica):
 1. NUNCA use dados reais de clientes: nenhum número, nome, setor+cidade combinados ou detalhe que permita identificação, mesmo anonimizado. Todo caso é padrão de mercado ou cenário composto ("o padrão que encontro é...", "já vi operação perder...").
 2. NUNCA produza conteúdo motivacional genérico, promessa de enriquecimento, crítica nominal a pessoas, empresas ou entidades, opinião política/religiosa, ou qualquer afirmação factual sobre terceiros que você não possa sustentar.
-3. NUNCA invente estatísticas. Dados de mercado só com fonte pública verificável; na dúvida, use formulação qualitativa.
-4. Tom: direto, experiente, pé no chão de fábrica, português do RS ("tu/teu" no Instagram, neutro no LinkedIn). Zero jargão de coach.
+3. NUNCA invente estatísticas. Dados de mercado só com fonte pública verificável e sempre atribuída (ex: "segundo a Gallup..."); na dúvida, use formulação qualitativa.
+4. NUNCA invente citações atribuídas a clientes. Tom: direto, experiente, pé no chão de fábrica, português do RS ("nós"/"tu" — nunca "vocês", que soa de cima para baixo). Zero jargão de coach.
 5. Toda peça pertence a uma das 5 linhas: Mentoria com o Especialista, Framework Próprio, Dilema de Sócio, Liderança (Dale Carnegie), Tese Regional.
-6. CTAs rotativos com palavra-chave de DIRECT (DIAGNÓSTICO, MAPA, VAZAMENTO, EXPANSÃO) em no máximo 40% das peças; o restante encerra com pergunta de engajamento ou instrução de salvar/compartilhar.
+6. CTAs rotativos com palavra-chave de DIRECT (DIAGNÓSTICO, MAPA, VAZAMENTO, EXPANSÃO) em no máximo 40% das peças; o restante encerra com pergunta de engajamento de baixo atrito ou instrução de salvar/compartilhar.
+7. Mix semanal de conteúdo (guia, não regra rígida): aproximadamente 2x insight/framework, 1x bastidor/mentoria, 1x enquete/pergunta e 1x dado com fonte, repetido a cada 7 peças.
 
 ENTRADA: métricas da semana anterior (JSON do Metricool) + histórico de temas já publicados (não repetir tema em 45 dias).
 
-SAÍDA: JSON estrito com o lote da semana:
-- 3 posts LinkedIn (ter/qui/sex 08h): texto completo, 900-1400 caracteres, gancho forte na 1ª linha, 3-4 hashtags.
-- 3 carrosséis IG (seg/qua/sex 11h30): 6-8 slides cada, com kicker, titulo, corpo por slide (títulos ≤ 60 caracteres, corpo ≤ 220), + legenda completa com hashtags.
-- 2 cards IG (ter/sáb 07h30): frase de impacto em duas partes — "gancho" (contexto/problema, ≤ 90 caracteres, tom neutro) + "virada" (conclusão/insight que fecha o raciocínio, ≤ 90 caracteres) — + legenda.
-- Para cada peça: linha editorial, data/hora, e campo racional (1 frase: por que este tema agora, com base nas métricas).
+CADÊNCIA E PUBLICAÇÃO (padrão atual): 2 peças por dia, todos os dias da semana (segunda a domingo) — 14 peças por semana — publicadas em horários de pico, 08h00 e 19h00 (America/Sao_Paulo). Cada peça é publicada SIMULTANEAMENTE em Instagram e LinkedIn, como um único post multi-rede (mesma imagem, mesmo texto) — não crie peças LinkedIn-only ou Instagram-only separadas.
 
-AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-3. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
+SAÍDA: JSON estrito com o lote da semana:
+- 14 peças (2 por dia, um slot 08h e um slot 19h), cada uma no formato "card" (frase de impacto em duas partes) OU "carrossel" (6-8 slides).
+- Card: "gancho" (contexto/problema, ≤ 90 caracteres, tom neutro) + "virada" (conclusão/insight que fecha o raciocínio, ≤ 90 caracteres).
+- Carrossel: 6-8 slides, com kicker, titulo, corpo por slide (títulos ≤ 60 caracteres, corpo ≤ 220 caracteres), incluindo 1 capa + 1 cta.
+- Todo card e todo carrossel leva também um campo "legenda" de 900-1400 caracteres com gancho forte na 1ª linha e hashtags-base (#DaleCarnegie #ValeDoTaquari #Liderança #RH #Lajeado #PessoasFortalecemEmpresas) — esse texto serve tanto de legenda do Instagram quanto de corpo do post do LinkedIn.
+- Para cada peça: linha editorial, data/hora, e campo racional (1 frase: por que este tema agora, com base nas métricas ou no mix semanal).
+
+AUTOAVALIAÇÃO OBRIGATÓRIA: antes de emitir a saída, verifique cada peça contra as Leis 1-4. Se qualquer peça falhar, reescreva-a. Emita apenas JSON válido.
 
 CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), sem acrescentar, remover ou renomear chaves. A resposta deve ser um único objeto JSON com esta forma exata:
 
@@ -64,35 +68,35 @@ CONTRATO DE SAÍDA — siga EXATAMENTE estes nomes de campo (case-sensitive), se
   "semana": "<data da segunda-feira alvo, YYYY-MM-DD, igual ao campo 'semana' da entrada>",
   "pecas": [
     {
-      "id": "<slug curto único, ex: 'li-1', 'ig-c1', 'ig-card1'>",
-      "canal": "linkedin" | "instagram",
-      "formato": "texto" | "carrossel" | "card",
+      "id": "<slug curto único, ex: 'ig-card1', 'ig-c1'>",
+      "canal": "instagram",
+      "formato": "carrossel" | "card",
       "linha": "Mentoria com o Especialista" | "Framework Próprio" | "Dilema de Sócio" | "Liderança (Dale Carnegie)" | "Tese Regional",
       "publicar_em": "<um dos valores de datas_alvo_semana da entrada, formato YYYY-MM-DDTHH:MM:SS>",
       "racional": "<1 frase: por que este tema agora>",
 
-      // presente SOMENTE se canal=linkedin (formato=texto):
-      "texto": "<900-1400 caracteres>",
-
-      // presente SOMENTE se canal=instagram e formato=carrossel:
+      // presente SOMENTE se formato=carrossel:
       "slides": [
         {"tipo": "capa", "kicker": "<linha editorial em maiusculas>", "titulo": "<=60 chars>", "subtitulo": null},
         {"tipo": "conteudo", "numero": "1", "titulo": "<=60 chars>", "corpo": "<=220 chars>"},
         {"tipo": "conteudo", "numero": "2", "titulo": "<=60 chars>", "corpo": "<=220 chars>"},
         {"tipo": "cta", "titulo": "<=60 chars>", "corpo": "<=220 chars>"}
       ],
-      "legenda": "<presente se formato=carrossel ou formato=card>",
 
-      // presente SOMENTE se canal=instagram e formato=card:
+      // presente SOMENTE se formato=card:
       "gancho": "<=90 caracteres, frase de contexto/problema (1a parte, tom neutro)",
-      "virada": "<=90 caracteres, frase de conclusao/insight (2a parte, o giro do pensamento)"
+      "virada": "<=90 caracteres, frase de conclusao/insight (2a parte, o giro do pensamento)",
+
+      // presente em TODA peca (carrossel ou card) — legenda/corpo unico usado nos dois canais:
+      "legenda": "<900-1400 caracteres, com hashtags-base>"
     }
   ]
 }
 
 Regras adicionais do contrato:
 - O esquema acima é apenas ilustrativo: os comentários iniciados por "//" e os placeholders entre "<>" ou com "|" NÃO devem aparecer no seu JSON de saída — são apenas explicações de formato.
-- Exatamente 8 peças no total: 3 linkedin/texto + 3 instagram/carrossel (6-8 slides cada, incluindo 1 capa + 1 cta) + 2 instagram/card.
+- Exatamente 14 peças no total, cobrindo todos os slots de datas_alvo_semana da entrada (2 por dia, 7 dias).
+- "canal" é sempre "instagram" (a peça é publicada em ambos os canais a partir do mesmo conteúdo/imagem — não crie peças com canal="linkedin").
 - Todo carrossel e todo card devem ter campo "legenda" com hashtags.
 - Nunca omita "pecas" nem devolva lista vazia — isso é tratado como falha total do lote.
 - Sua resposta inteira deve ser um único objeto JSON válido (RFC 8259), sem comentários, sem texto antes/depois, sem cercas de código ```."""
@@ -110,9 +114,12 @@ def _strip_code_fences(raw: str) -> str:
     return text
 
 
+HORARIOS_PICO = ("08h", "19h")  # America/Sao_Paulo — padrao atual: 2 posts/dia
+
+
 def _proximas_datas_uteis(hoje: datetime) -> dict:
-    """Calcula as datas-alvo da proxima semana (segunda a sabado) a partir
-    de `hoje`, seguindo a cadencia da secao 4 do Playbook."""
+    """Calcula as datas-alvo da proxima semana (segunda a domingo) a partir
+    de `hoje`, seguindo a cadencia atual de 2 peças/dia (08h e 19h)."""
     dias_ate_segunda = (7 - hoje.weekday()) % 7
     dias_ate_segunda = dias_ate_segunda or 7
     proxima_segunda = hoje + timedelta(days=dias_ate_segunda)
@@ -124,21 +131,21 @@ def _proximas_datas_uteis(hoje: datetime) -> dict:
 
 
 def _build_user_payload(metrics: dict, temas_recentes: list, hoje: datetime = None) -> dict:
+    """Monta o payload de entrada do Cerebro. `datas_alvo_semana` agora tem
+    14 slots (2 por dia, todos os 7 dias da semana, 08h/19h America/Sao_Paulo)
+    — padrao de cadencia atual (ver SYSTEM_PROMPT). Chaves no formato
+    '<dia>_<hora>', ex: 'segunda_08h', 'segunda_19h', ..., 'domingo_19h'."""
     hoje = hoje or datetime.now()
     datas = _proximas_datas_uteis(hoje)
+    nomes = ["segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo"]
+    datas_alvo_semana = {}
+    for nome in nomes:
+        for hora in HORARIOS_PICO:
+            datas_alvo_semana[f"{nome}_{hora}"] = f"{datas[nome]}T{hora[:2]}:00:00"
     return {
         "metricas_semana_anterior": metrics,
         "temas_ultimos_45_dias": temas_recentes,
-        "datas_alvo_semana": {
-            "carrossel_seg_11h30": f"{datas['segunda']}T11:30:00",
-            "card_ter_07h30": f"{datas['terca']}T07:30:00",
-            "linkedin_ter_08h": f"{datas['terca']}T08:00:00",
-            "carrossel_qua_11h30": f"{datas['quarta']}T11:30:00",
-            "linkedin_qui_08h": f"{datas['quinta']}T08:00:00",
-            "linkedin_sex_08h": f"{datas['sexta']}T08:00:00",
-            "carrossel_sex_11h30": f"{datas['sexta']}T11:30:00",
-            "card_sab_07h30": f"{datas['sabado']}T07:30:00",
-        },
+        "datas_alvo_semana": datas_alvo_semana,
         "semana": datas["segunda"],
     }
 
@@ -146,8 +153,10 @@ def _build_user_payload(metrics: dict, temas_recentes: list, hoje: datetime = No
 def _mock_batch(user_payload: dict) -> dict:
     """Lote de exemplo gerado localmente, sem chamada de rede, usado
     quando ANTHROPIC_API_KEY nao esta configurada (modo mock). Cobre os
-    3 formatos do contrato (linkedin/carrossel/card) para permitir teste
-    completo de renderizacao/validacao/dry-run."""
+    2 formatos do contrato atual (instagram/carrossel e instagram/card,
+    ambos publicados em duplo-canal) para permitir teste completo de
+    renderizacao/validacao/dry-run. Nao preenche as 14 peças da semana —
+    apenas 2 peças de exemplo, o suficiente para exercitar o pipeline."""
     datas = user_payload["datas_alvo_semana"]
     semana = user_payload["semana"]
     logger.warning(
@@ -158,46 +167,15 @@ def _mock_batch(user_payload: dict) -> dict:
         "semana": semana,
         "pecas": [
             {
-                "id": "li-1",
-                "canal": "linkedin",
-                "formato": "texto",
-                "linha": "Framework Próprio",
-                "publicar_em": datas["linkedin_ter_08h"],
-                "texto": (
-                    "Você é dono da empresa ou é o funcionário mais caro dela? "
-                    "Essa pergunta incomoda, mas vale a pena responder com a agenda na mão.\n\n"
-                    "A Regra 70/30 é simples de enunciar e difícil de aplicar: 70% do tempo do "
-                    "dono deveria estar em decisões que só o dono pode tomar — estratégia, "
-                    "pessoas-chave, grandes clientes, estrutura. No máximo 30% em operação do "
-                    "dia a dia.\n\n"
-                    "Na maioria das empresas que acompanho, essa proporção está invertida. O "
-                    "dono aprova nota fiscal, resolve reclamação de cliente pequeno, apaga "
-                    "incêndio operacional — e a estratégia vai ficando pra quando sobrar tempo. "
-                    "Só que nunca sobra.\n\n"
-                    "O teste é rápido: pegue a agenda da última semana e classifique cada bloco "
-                    "de tempo como DONO ou OPERADOR. O número que aparecer não mente, e "
-                    "geralmente é desconfortável.\n\n"
-                    "Virar esse jogo passa por três frentes: delegação estruturada com padrão "
-                    "de entrega definido (não apenas confiança), rituais de gestão que rodam "
-                    "sem a presença do fundador, e um segundo nível de liderança preparado para "
-                    "decidir — não só para executar.\n\n"
-                    "Nenhuma dessas três coisas acontece sozinha. Elas são construídas, com "
-                    "método, ao longo de meses — não em uma reunião de planejamento de fim de "
-                    "ano.\n\n"
-                    "Qual foi a proporção da sua última semana?"
-                    "\n\n#gestao #lideranca #empresafamiliar #consultoria"
-                ),
-                "racional": (
-                    "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
-                    "linkedin/texto do contrato para teste de dry-run."
-                ),
-            },
-            {
                 "id": "ig-c1",
                 "canal": "instagram",
                 "formato": "carrossel",
                 "linha": "Mentoria com o Especialista",
-                "publicar_em": datas["carrossel_seg_11h30"],
+                "publicar_em": datas["segunda_08h"],
+                "racional": (
+                    "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
+                    "carrossel do contrato atual (dual-canal) para teste de dry-run."
+                ),
                 "slides": [
                     {
                         "tipo": "capa",
@@ -262,7 +240,11 @@ def _mock_batch(user_payload: dict) -> dict:
                 "canal": "instagram",
                 "formato": "card",
                 "linha": "Tese Regional",
-                "publicar_em": datas["card_ter_07h30"],
+                "publicar_em": datas["segunda_19h"],
+                "racional": (
+                    "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato "
+                    "card do contrato atual (dual-canal) para teste de dry-run."
+                ),
                 "gancho": "O interior do RS parece pequeno no mapa.",
                 "virada": "Mas é uma potência empresarial invisível de fora.",
                 "legenda": (
@@ -307,7 +289,7 @@ def _aplicar_peca_fixa(lote: dict, user_payload: dict) -> dict:
             continue
         peca_fixa["publicar_em"] = publicar_em
         # Remove qualquer peca do lote (LLM/mock) que caia no mesmo slot,
-        # para evitar duplicar horario e manter o total de 8 pecas/semana.
+        # para evitar duplicar horario e manter o total de 14 pecas/semana.
         lote["pecas"] = [p for p in lote.get("pecas", []) if p.get("publicar_em") != publicar_em]
         lote["pecas"].append(peca_fixa)
         logger.info("Peca fixa '%s' injetada no slot '%s' (%s).", peca_fixa.get("id"), slot, publicar_em)

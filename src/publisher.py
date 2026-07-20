@@ -2,12 +2,17 @@
 """
 src/publisher.py — Publicador (Metricool), secao 7 da especificacao.
 
-Os payloads abaixo (build_linkedin_payload / build_instagram_payload) sao
-COPIA LITERAL dos contratos JSON das secoes 7.1 e 7.2 da especificacao,
-apenas parametrizando os campos variaveis (texto/media/data/legenda).
-Segundo a especificacao, esses payloads foram "validados em producao neste
-projeto via MCP" — portanto o contrato de campos base foi preservado
-exatamente.
+PADRAO ATUAL (cadencia 2x/dia, 08h/19h — ver src/generator.py): toda peca
+e publicada em duplo-canal (Instagram + LinkedIn) no MESMO post do
+Metricool via build_combined_payload() — mesma imagem, mesmo texto,
+`providers` com as duas redes. Esse e o formato confirmado como o que
+esta realmente em uso na fila viva do Metricool.
+
+build_linkedin_payload / build_instagram_payload (payloads por canal
+separado) sao mantidos como COPIA LITERAL dos contratos JSON das secoes
+7.1 e 7.2 da especificacao original, apenas parametrizando os campos
+variaveis (texto/media/data/legenda) — usados hoje só como fallback de
+compatibilidade para lotes antigos (ver `_build_payload_for_peca`).
 
 AUTENTICACAO — CONFIRMADO contra a documentacao oficial (04/09/2024,
 static.metricool.com/API+DOC/API+English.pdf) e o Help Center do
@@ -81,6 +86,33 @@ def build_linkedin_payload(texto: str, publicar_em: str) -> dict:
         "shortener": False, "smartLinkData": {"ids": []},
         "text": texto,
         "linkedinData": {"previewIncluded": True, "type": "POST"},
+    }
+
+
+def build_combined_payload(texto_ou_legenda: str, media_urls: list, publicar_em: str) -> dict:
+    """Payload PADRAO ATUAL (cadencia 2x/dia, 08h/19h): um unico post do
+    Metricool publicado SIMULTANEAMENTE em Instagram e LinkedIn — mesma
+    imagem, mesmo texto — via `providers: [{"network":"instagram"},
+    {"network":"linkedin"}]`. Este e o formato CONFIRMADO como o que esta
+    realmente em uso na fila viva do Metricool (ver nota de auditoria da
+    fila, tarefa #35), substituindo os payloads separados
+    build_linkedin_payload()/build_instagram_payload() abaixo — mantidos
+    apenas como referencia do contrato original de secoes 7.1/7.2 da
+    especificacao, caso um dia seja necessario voltar a publicar por
+    canal separado."""
+    return {
+        "autoPublish": True, "draft": False,
+        "media": list(media_urls),
+        "mediaAltText": ["" for _ in media_urls],
+        "providers": [{"network": "instagram"}, {"network": "linkedin"}],
+        "publicationDate": {"dateTime": publicar_em, "timezone": TIMEZONE},
+        "creationDate": {"dateTime": _now_iso(), "timezone": TIMEZONE},
+        "saveExternalMediaFiles": False,
+        "text": texto_ou_legenda,
+        "instagramData": {"type": "POST", "autoPublish": True},
+        "linkedinData": {"previewIncluded": True, "type": "POST"},
+        "descendants": [], "firstCommentText": "", "hasNotReadNotes": False,
+        "shortener": False, "smartLinkData": {"ids": []},
     }
 
 
@@ -198,11 +230,17 @@ def _post_with_retry(url: str, payload: dict, params: dict) -> Optional[dict]:
 
 
 def _build_payload_for_peca(peca: dict, media_urls: list) -> Optional[dict]:
+    """PADRAO ATUAL: toda peca (canal='instagram', formato card/carrossel)
+    e publicada em duplo-canal (Instagram + LinkedIn) no mesmo post via
+    build_combined_payload() — ver docstring dessa funcao. Os ramos
+    'linkedin' e 'instagram'-only abaixo sao mantidos apenas por
+    compatibilidade com lotes antigos (pre-cadencia 2x/dia) que ainda
+    tenham peca com canal='linkedin' ou sem campo 'legenda'."""
     if peca["canal"] == "linkedin":
         return build_linkedin_payload(peca["texto"], peca["publicar_em"])
     if peca["canal"] == "instagram":
-        legenda = peca.get("legenda", "")
-        return build_instagram_payload(media_urls, legenda, peca["publicar_em"])
+        texto = peca.get("legenda") or peca.get("texto", "")
+        return build_combined_payload(texto, media_urls, peca["publicar_em"])
     logger.warning("Peca %s com canal desconhecido: %s", peca.get("id"), peca.get("canal"))
     return None
 
