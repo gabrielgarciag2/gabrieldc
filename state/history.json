@@ -166,5 +166,26 @@
     "data": "2026-08-26",
     "canal": "instagram",
     "metrica_principal": null
+  },
+  {
+    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato carrossel do contrato atual (dual-canal) para teste de dry-run.",
+    "linha": "Mentoria com o Especialista",
+    "data": "2026-08-31",
+    "canal": "instagram",
+    "metrica_principal": null
+  },
+  {
+    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato card do contrato atual (dual-canal) para teste de dry-run.",
+    "linha": "Dados e tendências",
+    "data": "2026-08-31",
+    "canal": "instagram",
+    "metrica_principal": null
+  },
+  {
+    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato reel, obrigatorio nos slots de slots_reel, para teste de dry-run.",
+    "linha": "Empresas familiares e sucessão",
+    "data": "2026-09-02",
+    "canal": "instagram",
+    "metrica_principal": null
   }
 ]
