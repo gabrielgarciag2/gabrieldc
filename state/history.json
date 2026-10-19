@@ -1,40 +1,5 @@
 [
   {
-    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato linkedin/texto do contrato para teste de dry-run.",
-    "linha": "Framework Próprio",
-    "data": "2026-07-21",
-    "canal": "linkedin",
-    "metrica_principal": null
-  },
-  {
-    "tema": "O vazamento de margem que ninguém está olhando",
-    "linha": "Mentoria com o Especialista",
-    "data": "2026-07-20",
-    "canal": "instagram",
-    "metrica_principal": null
-  },
-  {
-    "tema": "O interior do RS é uma potência empresarial invisível.",
-    "linha": "Tese Regional",
-    "data": "2026-07-21",
-    "canal": "instagram",
-    "metrica_principal": null
-  },
-  {
-    "tema": "Sem dados de métricas disponíveis, abre a semana com conteúdo educativo de alto valor de salvamento para construir base de engajamento orgânico.",
-    "linha": "Framework Próprio",
-    "data": "2026-07-20",
-    "canal": "instagram",
-    "metrica_principal": null
-  },
-  {
-    "tema": "Card de abertura matinal com formato de impacto rápido para gerar reflexão e comentários sobre um dilema que afeta a maioria dos sócios de PME.",
-    "linha": "Dilema de Sócio",
-    "data": "2026-07-21",
-    "canal": "instagram",
-    "metrica_principal": null
-  },
-  {
     "tema": "Conteúdo de liderança no meio da semana equilibra o lote com tema de desenvolvimento humano, diferenciando o perfil de consultores puramente financeiros.",
     "linha": "Liderança (Dale Carnegie)",
     "data": "2026-07-22",
@@ -332,6 +297,27 @@
     "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato reel, obrigatorio nos slots de slots_reel, para teste de dry-run.",
     "linha": "Empresas familiares e sucessão",
     "data": "2026-10-21",
+    "canal": "instagram",
+    "metrica_principal": null
+  },
+  {
+    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato carrossel do contrato atual (dual-canal) para teste de dry-run.",
+    "linha": "Mentoria com o Especialista",
+    "data": "2026-10-26",
+    "canal": "instagram",
+    "metrica_principal": null
+  },
+  {
+    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato card do contrato atual (dual-canal) para teste de dry-run.",
+    "linha": "Dados e tendências",
+    "data": "2026-10-26",
+    "canal": "instagram",
+    "metrica_principal": null
+  },
+  {
+    "tema": "Peca de exemplo do modo mock (sem ANTHROPIC_API_KEY) — cobre o formato reel, obrigatorio nos slots de slots_reel, para teste de dry-run.",
+    "linha": "Empresas familiares e sucessão",
+    "data": "2026-10-28",
     "canal": "instagram",
     "metrica_principal": null
   }
